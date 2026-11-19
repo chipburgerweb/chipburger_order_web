@@ -1,6 +1,7 @@
 /**
  * Chip Burger Web Store & Daily Open Order System - Node.js Server
  * Full REST API + Owner-Secured Admin Portal
+ * Compatible with Local Node.js & Vercel Serverless Function
  */
 
 const http = require('http');
@@ -13,20 +14,102 @@ const PUBLIC_DIR = __dirname;
 
 // MIME Types
 const MIME_TYPES = {
-    '.html': 'text/html; charset=UTF-8',
-    '.css': 'text/css; charset=UTF-8',
-    '.js': 'application/javascript; charset=UTF-8',
-    '.json': 'application/json; charset=UTF-8',
-    '.png': 'image/png',
-    '.jpg': 'image/jpeg',
-    '.jpeg': 'image/jpeg',
-    '.svg': 'image/svg+xml',
-    '.ico': 'image/x-icon',
-    '.webp': 'image/webp'
+  '.html': 'text/html; charset=UTF-8',
+  '.css': 'text/css; charset=UTF-8',
+  '.js': 'application/javascript; charset=UTF-8',
+  '.json': 'application/json; charset=UTF-8',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.svg': 'image/svg+xml',
+  '.ico': 'image/x-icon',
+  '.webp': 'image/webp'
 };
 
 // 7 Varian Menu Utama Resmi PRD
 let CHIP_MENU = [
+  {
+    id: 'no-salad-burger',
+    name: 'NO SALAD BURGER',
+    displayPrice: '27K',
+    price: 27000,
+    ingredients: 'Bun, Beef Patty, Chipsaus, Cheese Slice',
+    tag: 'no-salad',
+    isBestSeller: false,
+    available: true,
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80'
+  },
+  {
+    id: 'lo-burger',
+    name: 'LO BURGER',
+    displayPrice: '32K',
+    price: 32000,
+    ingredients: 'Bun, Beef Patty, Chipsaus, Lettuce, Onion, Pickle, Cheese Slice, Tomato',
+    tag: 'bestseller',
+    isBestSeller: true,
+    available: true,
+    image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80'
+  },
+  {
+    id: 'mushroom-burger',
+    name: 'MUSHROOM BURGER',
+    displayPrice: '37K',
+    price: 37000,
+    ingredients: 'Bun, Beef Patty, Mushroom, Chipsaus, Lettuce, Onion, Pickle, Cheese Slice, Tomato',
+    tag: 'mushroom',
+    isBestSeller: false,
+    available: true,
+    image: 'https://images.unsplash.com/photo-1583032015879-c5622e519967?auto=format&fit=crop&w=600&q=80'
+  },
+  {
+    id: 'gourmet-burger',
+    name: 'GOURMET BURGER',
+    displayPrice: '40K',
+    price: 40000,
+    ingredients: 'Bun, Beef Patty, Chipsaus, Lettuce, Onion, Pickle, Beef Slice, Cheese Slice, Tomato, Egg Yolk',
+    tag: 'bestseller',
+    isBestSeller: true,
+    available: true,
+    image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=600&q=80'
+  },
+  {
+    id: 'smoked-beef-burger',
+    name: 'SMOKED BEEF BURGER',
+    displayPrice: '43K',
+    price: 43000,
+    ingredients: 'Bun, Beef Patty, Smoked Beef, Chipsaus, Lettuce, Onion, Pickle, Cheese Slice, Tomato',
+    tag: 'smoked',
+    isBestSeller: false,
+    available: true,
+    image: 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80'
+  },
+  {
+    id: 'cheese-burger',
+    name: 'CHEESE BURGER',
+    displayPrice: '47K',
+    price: 47000,
+    ingredients: 'Bun, Beef Patty, Beef Slice, Chipsaus, Lettuce, Onion, Pickle, 2x Cheese Slice, Extra Cheese Sauce, Tomato',
+    tag: 'double-cheese, bestseller',
+    isBestSeller: true,
+    available: true,
+    image: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=600&q=80'
+  },
+  {
+    id: 'doubpat-burger',
+    name: 'DOUBPAT BURGER',
+    displayPrice: '74K',
+    price: 74000,
+    ingredients: 'Bun, 2x Beef Patty, Beef Slice, Chipsaus, Lettuce, Onion, Pickle, 2x Cheese Slice, Extra Cheese Sauce, Tomato',
+    tag: 'double-cheese',
+    isBestSeller: false,
+    available: true,
+    image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80'
+  }
+];
+
+// In-Memory Database (Owner Single Admin Account)
+const db = {
+  users: [
     {
       name: 'Burger Lover',
       email: 'demo@chipburger.com',
@@ -35,26 +118,38 @@ let CHIP_MENU = [
       role: 'customer'
     },
     {
-        id: 'lo-burger',
-        name: 'LO BURGER',
-        displayPrice: '32K',
-        price: 32000,
-        ingredients: 'Bun, Beef Patty, Chipsaus, Lettuce, Onion, Pickle, Cheese Slice, Tomato',
-        tag: 'bestseller',
-        isBestSeller: true,
-        available: true,
-        image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80'
-    },
+      name: 'Warisul Zaim (Owner)',
+      email: 'warisulzaim@gmail.com',
+      phone: '082284362199',
+      password: 'Zaimajaya_12',
+      role: 'admin'
+    }
+  ],
+  storeConfig: {
+    isOpen: true,
+    openNotice: 'OPEN ORDER SETIAP HARI • MADE FRESH TO ORDER (100% ORIGINAL BEEF PATTY)',
+    operatingHours: '11.00 – 21.30 WIB',
+    whatsappHotline: '0822-8436-2199',
+    deliveryFee: 10000
+  },
+  orders: [
     {
-        id: 'mushroom-burger',
-        name: 'MUSHROOM BURGER',
-        displayPrice: '37K',
-        price: 37000,
-        ingredients: 'Bun, Beef Patty, Mushroom, Chipsaus, Lettuce, Onion, Pickle, Cheese Slice, Tomato',
-        tag: 'mushroom',
-        isBestSeller: false,
-        available: true,
-        image: 'https://images.unsplash.com/photo-1583032015879-c5622e519967?auto=format&fit=crop&w=600&q=80'
+      queueNo: '#CB-782',
+      customerName: 'Dina Kurnia',
+      customerPhone: '081298765432',
+      method: 'delivery',
+      timeSlot: 'Kirim / Ambil Sekarang (Estimasi ± 20–30 Menit)',
+      address: 'Jl. Kemang Raya No. 12B, Jakarta Selatan',
+      notes: 'Tolong saus chipsaus-nya dipisah ya',
+      items: [
+        { name: 'CHEESE BURGER', qty: 2, price: 47000 },
+        { name: 'LO BURGER', qty: 1, price: 32000 }
+      ],
+      subtotal: 126000,
+      shippingFee: 10000,
+      total: 136000,
+      status: 'pending',
+      createdAt: new Date(Date.now() - 35 * 60000).toISOString()
     },
     {
       queueNo: '#CB-419',
@@ -76,84 +171,20 @@ let CHIP_MENU = [
   ]
 };
 
-    // In-Memory Database
-    const db = {
-        users: [
-            {
-                name: 'Burger Lover',
-                email: 'demo@chipburger.com',
-                phone: '081234567890',
-                password: 'password123',
-                role: 'customer'
-            },
-            {
-                name: 'Admin Chip Burger',
-                email: 'admin@chipburger.com',
-                phone: '082284362199',
-                password: 'admin123',
-                role: 'admin'
-            }
-        ],
-        storeConfig: {
-            isOpen: true,
-            openNotice: 'OPEN ORDER SETIAP HARI • MADE FRESH TO ORDER (100% ORIGINAL BEEF PATTY)',
-            operatingHours: '11.00 – 21.30 WIB',
-            whatsappHotline: '0822-8436-2199',
-            deliveryFee: 10000
-        },
-        orders: [
-            {
-                queueNo: '#CB-782',
-                customerName: 'Dina Kurnia',
-                customerPhone: '081298765432',
-                method: 'delivery',
-                timeSlot: 'Kirim / Ambil Sekarang (Estimasi ± 20–30 Menit)',
-                address: 'Jl. Kemang Raya No. 12B, Jakarta Selatan',
-                notes: 'Tolong saus chipsaus-nya dipisah ya',
-                items: [
-                    { name: 'CHEESE BURGER', qty: 2, price: 47000 },
-                    { name: 'LO BURGER', qty: 1, price: 32000 }
-                ],
-                subtotal: 126000,
-                shippingFee: 10000,
-                total: 136000,
-                status: 'pending', // pending, preparing, delivering, completed, cancelled
-                createdAt: new Date(Date.now() - 35 * 60000).toISOString()
-            },
-            {
-                queueNo: '#CB-419',
-                customerName: 'Budi Santoso',
-                customerPhone: '081234567890',
-                method: 'pickup',
-                timeSlot: 'Jadwal Siang (12.00 – 14.00 WIB)',
-                address: '-',
-                notes: 'Tanpa timun/pickle',
-                items: [
-                    { name: 'DOUBPAT BURGER', qty: 1, price: 74000 }
-                ],
-                subtotal: 74000,
-                shippingFee: 0,
-                total: 74000,
-                status: 'preparing',
-                createdAt: new Date(Date.now() - 15 * 60000).toISOString()
-            }
-        ]
-    };
-
-    // Helper: Parse JSON Body
-    function parseBody(req) {
-        return new Promise((resolve, reject) => {
-            let body = '';
-            req.on('data', chunk => { body += chunk.toString(); });
-            req.on('end', () => {
-                try {
-                    resolve(body ? JSON.parse(body) : {});
-                } catch (err) {
-                    reject(err);
-                }
-            });
-            req.on('error', err => reject(err));
-        });
+// Helper: Parse JSON Body
+function parseBody(req) {
+  return new Promise((resolve, reject) => {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', () => {
+      try {
+        resolve(body ? JSON.parse(body) : {});
+      } catch (err) {
+        reject(err);
+      }
+    });
+    req.on('error', err => reject(err));
+  });
 }
 
 // Helper: Send JSON Response
@@ -167,11 +198,11 @@ function sendJSON(res, statusCode, data) {
   res.end(JSON.stringify(data));
 }
 
-// Create HTTP Server
-const server = http.createServer(async (req, res) => {
-    const parsedUrl = url.parse(req.url, true);
-    let pathname = parsedUrl.pathname;
-    const method = req.method;
+// Main Request Handler
+async function requestHandler(req, res) {
+  const parsedUrl = url.parse(req.url, true);
+  let pathname = parsedUrl.pathname;
+  const method = req.method;
 
   // Handle CORS
   if (method === 'OPTIONS') {
@@ -232,15 +263,15 @@ const server = http.createServer(async (req, res) => {
             role: user.role || 'customer'
           }
         });
-    } else {
+      } else {
         return sendJSON(res, 401, {
-            success: false,
-            message: 'Email atau kata sandi tidak cocok.'
+          success: false,
+          message: 'Email atau kata sandi tidak cocok.'
         });
+      }
+    } catch (e) {
+      return sendJSON(res, 400, { success: false, message: 'Format data tidak valid.' });
     }
-} catch (e) {
-    return sendJSON(res, 400, { success: false, message: 'Format data tidak valid.' });
-}
   }
 
   // 4. PUBLIC: Order Submission
@@ -264,12 +295,12 @@ const server = http.createServer(async (req, res) => {
         createdAt: new Date().toISOString()
       };
 
-        db.orders.unshift(newOrder);
-        return sendJSON(res, 201, { success: true, queueNo, order: newOrder });
+      db.orders.unshift(newOrder);
+      return sendJSON(res, 201, { success: true, queueNo, order: newOrder });
     } catch (e) {
-        return sendJSON(res, 400, { success: false, message: 'Gagal mencatat pesanan.' });
+      return sendJSON(res, 400, { success: false, message: 'Gagal mencatat pesanan.' });
     }
-}
+  }
 
   // ================= ADMIN SECURED ENDPOINTS =================
 
@@ -329,21 +360,12 @@ const server = http.createServer(async (req, res) => {
         available: true,
         image: itemData.image || 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80'
       };
-    } catch (e) {
-        return sendJSON(res, 400, { success: false, message: 'Bad request' });
-    }
-}
 
       if (existingIndex >= 0) {
         CHIP_MENU[existingIndex] = { ...CHIP_MENU[existingIndex], ...formattedItem };
       } else {
         CHIP_MENU.push(formattedItem);
       }
-        return sendJSON(res, 404, { success: false, message: 'Item menu tidak ditemukan' });
-    } catch (e) {
-        return sendJSON(res, 400, { success: false, message: 'Bad request' });
-    }
-}
 
       return sendJSON(res, 200, { success: true, item: formattedItem });
     } catch (e) {
@@ -378,11 +400,9 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
-        return sendJSON(res, 200, { success: true, item: formattedItem });
-    } catch (e) {
-        return sendJSON(res, 400, { success: false, message: 'Bad request' });
-    }
-}
+  // ================= STATIC FILE SERVER =================
+  let relativeFile = pathname === '/' ? 'index.html' : pathname.replace(/^\//, '');
+  let filePath = path.join(PUBLIC_DIR, relativeFile);
 
   if (!path.extname(filePath) && fs.existsSync(filePath + '.html')) {
     filePath += '.html';
@@ -393,19 +413,17 @@ const server = http.createServer(async (req, res) => {
     res.end('Access Denied');
     return;
   }
-    });
-}
 
-fs.stat(filePath, (err, stats) => {
+  fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
-        res.writeHead(404, { 'Content-Type': 'text/html; charset=UTF-8' });
-        res.end(`
+      res.writeHead(404, { 'Content-Type': 'text/html; charset=UTF-8' });
+      res.end(`
         <div style="font-family: sans-serif; text-align: center; padding: 50px;">
           <h2>404 - Halaman Tidak Ditemukan</h2>
           <p>Kembali ke <a href="/">Beranda Chip Burger</a> atau ke <a href="/admin.html">Portal Admin</a>.</p>
         </div>
       `);
-        return;
+      return;
     }
 
     const ext = path.extname(filePath).toLowerCase();
@@ -413,10 +431,14 @@ fs.stat(filePath, (err, stats) => {
 
     res.writeHead(200, { 'Content-Type': contentType });
     fs.createReadStream(filePath).pipe(res);
-});
-});
+  });
+}
 
-server.listen(PORT, '0.0.0.0', () => {
+// Create HTTP Server for Local & Export for Vercel
+const server = http.createServer(requestHandler);
+
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  server.listen(PORT, '0.0.0.0', () => {
     console.log(`\n======================================================`);
     console.log(`🍔 Chip Burger Web Server & Admin Portal (Node.js)`);
     console.log(`📡 Berjalan di : http://localhost:${PORT}`);
@@ -424,4 +446,7 @@ server.listen(PORT, '0.0.0.0', () => {
     console.log(`👑 Portal Admin: http://localhost:${PORT}/admin.html`);
     console.log(`🔒 Akses Khusus: warisulzaim@gmail.com`);
     console.log(`======================================================\n`);
-});
+  });
+}
+
+module.exports = requestHandler;
