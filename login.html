@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Masuk & Daftar Akun - Chip Burger (@chipburger_id)</title>
+
+  <!-- Google Fonts: Lobster, Libre Baskerville, Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lobster&family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: {
+              DEFAULT: '#F9F4E8',
+              light: '#FDFBF5',
+            },
+            maroon: {
+              DEFAULT: '#5A0C12',
+              dark: '#3F070B',
+              bun: '#7F232C',
+              patty: '#532122',
+            },
+            gold: {
+              DEFAULT: '#B88928',
+              light: '#D4AF37',
+              dark: '#8C6718',
+            }
+          },
+          fontFamily: {
+            brand: ['Lobster', 'cursive'],
+            display: ['"Playfair Display"', '"Libre Baskerville"', 'serif'],
+            sans: ['Montserrat', 'sans-serif'],
+          },
+          boxShadow: {
+            poster: '0 12px 40px rgba(90, 12, 18, 0.12)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .poster-outer-border {
+      border: 2px solid #B88928;
+      position: relative;
+    }
+
+    .poster-inner-border {
+      border: 1px solid rgba(184, 137, 40, 0.45);
+    }
+
+    .corner-star {
+      position: absolute;
+      color: #B88928;
+      font-size: 14px;
+      line-height: 1;
+      transform: translate(-50%, -50%);
+    }
+
+    .corner-tl {
+      top: 0;
+      left: 0;
+    }
+
+    .corner-tr {
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+    }
+
+    .corner-bl {
+      bottom: 0;
+      left: 0;
+      transform: translate(-50%, 50%);
+    }
+
+    .corner-br {
+      bottom: 0;
+      right: 0;
+      transform: translate(50%, 50%);
+    }
+  </style>
+</head>
+
+<body
+  class="bg-cream text-maroon font-sans min-h-screen flex flex-col justify-between selection:bg-maroon selection:text-cream-light p-4 sm:p-6">
+
+  <!-- Header Nav -->
+  <header class="max-w-4xl mx-auto w-full flex items-center justify-between pb-6">
+    <a href="index.html"
+      class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-maroon hover:text-gold transition-colors">
+      <i data-lucide="arrow-left" class="w-4 h-4 text-gold"></i>
+      <span>Kembali ke Menu Utama</span>
+    </a>
+    <div class="flex items-center gap-2">
+      <span class="font-brand text-2xl text-maroon">Chip Burger</span>
+    </div>
+  </header>
+
+  <!-- Main Auth Box Poster Style -->
+  <main class="flex-1 flex items-center justify-center py-4">
+    <div class="poster-outer-border bg-cream-light p-4 sm:p-6 shadow-poster rounded-sm max-w-md w-full relative">
+      <span class="corner-star corner-tl">★</span>
+      <span class="corner-star corner-tr">★</span>
+      <span class="corner-star corner-bl">★</span>
+      <span class="corner-star corner-br">★</span>
+
+      <div class="poster-inner-border p-6 sm:p-8">
+
+        <!-- Official Logo Image -->
+        <div class="w-20 h-20 mx-auto mb-2 flex items-center justify-center">
+          <img src="assets/images/logo.png" alt="Chip Burger Logo" class="w-full h-full object-contain drop-shadow-sm">
+        </div>
+
+        <div class="text-center mb-6">
+          <h1 id="authTitle" class="font-display font-black text-2xl text-maroon tracking-tight">Akun Pelanggan</h1>
+          <p id="authSubtitle" class="text-xs text-maroon/70 mt-1">Masuk untuk kemudahan isi otomatis form pesanan
+            WhatsApp</p>
+        </div>
+
+        <!-- Tab Toggle -->
+        <div class="grid grid-cols-2 p-1 bg-cream rounded-xl border border-gold/50 mb-5">
+          <button id="tabLoginBtn" onclick="switchTab('login')"
+            class="py-2 rounded-lg font-bold text-xs uppercase tracking-wider bg-maroon text-cream-light shadow transition-all">
+            Masuk
+          </button>
+          <button id="tabRegisterBtn" onclick="switchTab('register')"
+            class="py-2 rounded-lg font-bold text-xs uppercase tracking-wider text-maroon hover:text-gold transition-all">
+            Daftar
+          </button>
+        </div>
+
+        <!-- Quick Demo Pill -->
+        <div class="mb-4 p-2.5 rounded-lg bg-gold/15 border border-gold/40 text-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-maroon font-bold text-[11px]">Akun Pelanggan Demo:</span>
+            <button onclick="fillDemo()"
+              class="px-2.5 py-0.5 bg-maroon text-gold font-bold rounded text-[10px] uppercase hover:bg-maroon-dark">
+              Isi Demo
+            </button>
+          </div>
+        </div>
+
+        <!-- Alert Notification -->
+        <div id="authAlert" class="hidden mb-4 p-3 rounded-lg text-xs font-bold text-center"></div>
+
+        <!-- Form Login -->
+        <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-3.5">
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon mb-1">Email /
+              WhatsApp</label>
+            <input type="text" id="loginIdentifier" required placeholder="demo@chipburger.com"
+              class="w-full px-3 py-2 rounded-lg bg-cream border border-gold/60 text-xs font-semibold text-maroon placeholder-maroon/40 focus:outline-none focus:border-maroon">
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon mb-1">Kata Sandi</label>
+            <input type="password" id="loginPassword" required placeholder="••••••••"
+              class="w-full px-3 py-2 rounded-lg bg-cream border border-gold/60 text-xs font-semibold text-maroon placeholder-maroon/40 focus:outline-none focus:border-maroon">
+          </div>
+
+          <button type="submit"
+            class="w-full py-3 rounded-xl bg-maroon hover:bg-maroon-dark text-cream-light font-bold text-xs uppercase tracking-wider border border-gold shadow-md active:scale-95 transition-all">
+            Masuk Sekarang
+          </button>
+        </form>
+
+        <!-- Form Register -->
+        <form id="registerForm" onsubmit="handleRegisterSubmit(event)" class="space-y-3.5 hidden">
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon mb-1">Nama Lengkap</label>
+            <input type="text" id="regName" required placeholder="Contoh: Budi Santoso"
+              class="w-full px-3 py-2 rounded-lg bg-cream border border-gold/60 text-xs font-semibold text-maroon placeholder-maroon/40 focus:outline-none focus:border-maroon">
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon mb-1">Nomor WhatsApp
+              Aktif</label>
+            <input type="tel" id="regPhone" required placeholder="Contoh: 081234567890"
+              class="w-full px-3 py-2 rounded-lg bg-cream border border-gold/60 text-xs font-semibold text-maroon placeholder-maroon/40 focus:outline-none focus:border-maroon">
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon mb-1">Alamat Email</label>
+            <input type="email" id="regEmail" required placeholder="budi@example.com"
+              class="w-full px-3 py-2 rounded-lg bg-cream border border-gold/60 text-xs font-semibold text-maroon placeholder-maroon/40 focus:outline-none focus:border-maroon">
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon mb-1">Kata Sandi</label>
+            <input type="password" id="regPassword" required placeholder="Minimal 6 karakter"
+              class="w-full px-3 py-2 rounded-lg bg-cream border border-gold/60 text-xs font-semibold text-maroon placeholder-maroon/40 focus:outline-none focus:border-maroon">
+          </div>
+
+          <button type="submit"
+            class="w-full py-3 rounded-xl bg-maroon hover:bg-maroon-dark text-cream-light font-bold text-xs uppercase tracking-wider border border-gold shadow-md active:scale-95 transition-all">
+            Buat Akun Member
+          </button>
+        </form>
+
+        <div class="mt-5 pt-4 border-t border-gold/30 text-center">
+          <a href="index.html" class="text-xs font-bold text-maroon/80 hover:text-gold uppercase tracking-wider">
+            Lanjut Pesan Tanpa Akun &rarr;
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="text-center text-[11px] text-maroon/60 py-4">
+    &copy; 2026 Chip Burger (@chipburger_id). WhatsApp: 0822-8436-2199
+  </footer>
+
+  <script>
+    function switchTab(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('loginForm').classList.toggle('hidden', !isLogin);
+      document.getElementById('registerForm').classList.toggle('hidden', isLogin);
+
+      const tabLoginBtn = document.getElementById('tabLoginBtn');
+      const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+
+      if (isLogin) {
+        tabLoginBtn.className = 'py-2 rounded-lg font-bold text-xs uppercase tracking-wider bg-maroon text-cream-light shadow transition-all';
+        tabRegisterBtn.className = 'py-2 rounded-lg font-bold text-xs uppercase tracking-wider text-maroon hover:text-gold transition-all';
+      } else {
+        tabRegisterBtn.className = 'py-2 rounded-lg font-bold text-xs uppercase tracking-wider bg-maroon text-cream-light shadow transition-all';
+        tabLoginBtn.className = 'py-2 rounded-lg font-bold text-xs uppercase tracking-wider text-maroon hover:text-gold transition-all';
+      }
+    }
+
+    function fillDemo() {
+      document.getElementById('loginIdentifier').value = 'demo@chipburger.com';
+      document.getElementById('loginPassword').value = 'password123';
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('loginIdentifier').value.trim();
+      const pass = document.getElementById('loginPassword').value;
+
+      // Check Owner / Admin credentials directly
+      if (id.toLowerCase() === 'warisulzaim@gmail.com' && pass === 'Zaimajaya_12') {
+        const ownerUser = {
+          name: 'Warisul Zaim (Owner)',
+          email: 'warisulzaim@gmail.com',
+          phone: '082284362199',
+          role: 'admin'
+        };
+        localStorage.setItem('chipburger_admin', 'warisulzaim@gmail.com');
+        localStorage.setItem('chipburger_user', JSON.stringify(ownerUser));
+        showAlert('Login Pemilik Berhasil! Mengalihkan ke Portal Admin...', 'bg-gold text-maroon border border-gold font-black');
+        setTimeout(() => window.location.href = 'admin.html', 800);
+        return;
+      }
+
+      // Try API Login
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ emailOrUser: id, password: pass })
+        });
+        const data = await res.json();
+        if (data.success) {
+          if (data.user.email.toLowerCase() === 'warisulzaim@gmail.com' && data.user.role === 'admin') {
+            localStorage.setItem('chipburger_admin', 'warisulzaim@gmail.com');
+            localStorage.setItem('chipburger_user', JSON.stringify(data.user));
+            showAlert('Login Pemilik Berhasil! Mengalihkan ke Portal Admin...', 'bg-gold text-maroon border border-gold font-black');
+            setTimeout(() => window.location.href = 'admin.html', 800);
+            return;
+          }
+          localStorage.removeItem('chipburger_admin');
+          localStorage.setItem('chipburger_user', JSON.stringify(data.user));
+          showAlert('Login berhasil! Mengalihkan ke menu...', 'bg-green-100 text-green-800 border border-green-300');
+          setTimeout(() => window.location.href = 'index.html', 800);
+          return;
+        } else {
+          showAlert(data.message || 'Login gagal.', 'bg-red-100 text-red-800 border border-red-300');
+          return;
+        }
+      } catch (err) {
+        // Fallback offline for customer
+      }
+
+      // Local fallback for regular customer
+      const user = {
+        name: id.includes('@') ? id.split('@')[0] : 'Pelanggan Setia',
+        email: id,
+        phone: '082284362199',
+        role: 'customer'
+      };
+      localStorage.removeItem('chipburger_admin');
+      localStorage.setItem('chipburger_user', JSON.stringify(user));
+      showAlert('Login berhasil! Mengalihkan ke menu...', 'bg-green-100 text-green-800 border border-green-300');
+      setTimeout(() => window.location.href = 'index.html', 800);
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+
+      const user = { name, phone, email };
+      localStorage.setItem('chipburger_user', JSON.stringify(user));
+      showAlert('Registrasi berhasil! Selamat datang di Chip Burger.', 'bg-green-100 text-green-800 border border-green-300');
+      setTimeout(() => window.location.href = 'index.html', 800);
+    }
+
+    function showAlert(msg, classes) {
+      const alert = document.getElementById('authAlert');
+      alert.className = `mb-4 p-3 rounded-lg text-xs font-bold text-center ${classes}`;
+      alert.textContent = msg;
+      alert.classList.remove('hidden');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+
+</body>
+
+</html>

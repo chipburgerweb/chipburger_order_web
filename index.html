@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chip Burger (@chipburger_id) - Daily Open Order & Menu Resmi</title>
+
+  <!-- Google Fonts: Lobster (Logo), Playfair Display & Libre Baskerville (Heading), Montserrat (UI & Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lobster&family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind CSS CDN with PRD custom config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: {
+              DEFAULT: '#F9F4E8', // Warm Cream Latar Utama
+              light: '#FDFBF5',   // Latar Kartu / Bingkai Dalam
+            },
+            maroon: {
+              DEFAULT: '#5A0C12', // Deep Maroon Utama / Tombol
+              dark: '#3F070B',
+              bun: '#7F232C',     // Logo kubah roti & kapsul
+              patty: '#532122',   // Saus/Patty logo
+            },
+            gold: {
+              DEFAULT: '#B88928', // Antique Gold
+              light: '#D4AF37',
+              dark: '#8C6718',
+            }
+          },
+          fontFamily: {
+            brand: ['Lobster', 'cursive'],
+            display: ['"Playfair Display"', '"Libre Baskerville"', 'serif'],
+            basker: ['"Libre Baskerville"', 'serif'],
+            sans: ['Montserrat', 'sans-serif'],
+          },
+          boxShadow: {
+            classic: '0 8px 30px rgba(90, 12, 18, 0.08)',
+            poster: '0 12px 40px rgba(90, 12, 18, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Poster Framing & Classic Borders */
+    .poster-outer-border {
+      border: 2px solid #B88928;
+      position: relative;
+    }
+
+    .poster-inner-border {
+      border: 1px solid rgba(184, 137, 40, 0.45);
+    }
+
+    .corner-star {
+      position: absolute;
+      color: #B88928;
+      font-size: 14px;
+      line-height: 1;
+      transform: translate(-50%, -50%);
+    }
+
+    .corner-tl {
+      top: 0;
+      left: 0;
+    }
+
+    .corner-tr {
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+    }
+
+    .corner-bl {
+      bottom: 0;
+      left: 0;
+      transform: translate(-50%, 50%);
+    }
+
+    .corner-br {
+      bottom: 0;
+      right: 0;
+      transform: translate(50%, 50%);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F9F4E8;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #B88928;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #5A0C12;
+    }
+
+    /* Pulse Green Badge */
+    @keyframes pulseSlow {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.85;
+        transform: scale(1.05);
+      }
+    }
+
+    .pulse-badge {
+      animation: pulseSlow 2.5s infinite ease-in-out;
+    }
+  </style>
+</head>
+
+<body
+  class="bg-cream text-maroon font-sans antialiased min-h-screen selection:bg-maroon selection:text-cream-light pb-28 md:pb-16">
+
+  <!-- ================= TOP BANNER STATUS ================= -->
+  <div class="bg-maroon text-cream-light py-2 px-4 border-b-2 border-gold text-center relative z-40">
+    <div
+      class="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-2 md:gap-3 text-xs md:text-sm font-semibold tracking-wide">
+      <span
+        class="inline-flex items-center gap-1.5 bg-green-600 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider pulse-badge shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+        OPEN ORDER HARI INI
+      </span>
+      <span class="text-gold font-bold">•</span>
+      <span class="text-cream">OPEN ORDER SETIAP HARI • MADE FRESH TO ORDER (100% ORIGINAL BEEF PATTY)</span>
+      <span class="text-gold hidden md:inline">•</span>
+      <span class="hidden md:inline text-gold-light text-xs font-medium">Jam: 11.00 – 21.30 WIB</span>
+    </div>
+  </div>
+
+  <!-- ================= STICKY HEADER ================= -->
+  <header class="sticky top-0 z-30 bg-cream-light/95 backdrop-blur-md border-b border-gold/40 shadow-sm transition-all">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+
+      <!-- Brand Logo Mini with Official Image Logo -->
+      <a href="#hero" class="flex items-center gap-2.5 group">
+        <img src="assets/images/logo.png" alt="Chip Burger Logo"
+          class="w-12 h-12 object-contain rounded-xl group-hover:scale-105 transition-transform duration-300 drop-shadow-sm">
+        <div>
+          <span class="font-brand text-2xl text-maroon block leading-tight tracking-wide">Chip Burger</span>
+          <span class="text-[9px] font-bold tracking-[0.2em] text-gold uppercase block -mt-1">PREMIUM TASTE</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-7 text-xs font-bold uppercase tracking-wider text-maroon">
+        <a href="#menu-section" class="hover:text-gold transition-colors flex items-center gap-1.5">
+          <i data-lucide="utensils" class="w-4 h-4 text-gold"></i>
+          <span>Daftar Menu</span>
+        </a>
+        <a href="#info-section" class="hover:text-gold transition-colors flex items-center gap-1.5">
+          <i data-lucide="clock" class="w-4 h-4 text-gold"></i>
+          <span>Jam & Info Order</span>
+        </a>
+        <a href="#contact-section" class="hover:text-gold transition-colors flex items-center gap-1.5">
+          <i data-lucide="phone" class="w-4 h-4 text-gold"></i>
+          <span>Kontak Kami</span>
+        </a>
+        <a href="admin.html"
+          class="hover:text-gold transition-colors flex items-center gap-1.5 bg-gold/15 px-3 py-1 rounded-full border border-gold/40 text-maroon font-black">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-gold"></i>
+          <span>Portal Admin</span>
+        </a>
+      </nav>
+
+      <!-- Cart Button & Auth Status -->
+      <div class="flex items-center gap-3">
+        <!-- Auth Profile Pill (Syncs with login.html) -->
+        <div id="authHeaderArea" class="flex items-center">
+          <a href="login.html"
+            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gold/60 text-maroon hover:bg-gold/10 text-xs font-bold transition-all">
+            <i data-lucide="user" class="w-3.5 h-3.5 text-gold"></i>
+            <span>Masuk Akun</span>
+          </a>
+        </div>
+
+        <!-- Cart Button -->
+        <button id="openCartBtn" onclick="toggleCartDrawer(true)"
+          class="relative flex items-center gap-2 bg-maroon text-cream-light hover:bg-maroon-dark active:scale-95 px-4 py-2.5 rounded-full font-bold text-xs uppercase tracking-wider shadow-md border border-gold transition-all">
+          <i data-lucide="shopping-bag" class="w-4 h-4 text-gold"></i>
+          <span class="hidden sm:inline">Pesanan</span>
+          <span id="navCartCount"
+            class="w-5 h-5 bg-gold text-maroon rounded-full flex items-center justify-center text-[11px] font-black leading-none">0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= POSTER HERO SECTION ================= -->
+  <section id="hero" class="pt-8 pb-12 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- Poster Vintage Card Frame -->
+      <div class="poster-outer-border bg-cream-light p-3 sm:p-6 shadow-poster rounded-sm relative">
+        <!-- 4 Corner Stars -->
+        <span class="corner-star corner-tl">★</span>
+        <span class="corner-star corner-tr">★</span>
+        <span class="corner-star corner-bl">★</span>
+        <span class="corner-star corner-br">★</span>
+
+        <!-- Inner Border Frame -->
+        <div class="poster-inner-border p-6 sm:p-10 text-center relative flex flex-col items-center">
+
+          <!-- Badge Subtitle -->
+          <div class="flex items-center justify-center gap-3 mb-3">
+            <span class="h-[1px] w-8 sm:w-16 bg-gold"></span>
+            <span class="text-gold text-xs sm:text-sm font-bold tracking-[0.25em] uppercase">OFFICIAL MENU &
+              ORDER</span>
+            <span class="h-[1px] w-8 sm:w-16 bg-gold"></span>
+          </div>
+
+          <!-- Big Brand Official Image Logo -->
+          <div class="w-36 h-36 sm:w-44 sm:h-44 mb-3 flex items-center justify-center">
+            <img src="assets/images/logo.png" alt="Logo Resmi Chip Burger"
+              class="w-full h-full object-contain drop-shadow-md hover:scale-105 transition-transform duration-300">
+          </div>
+
+          <!-- Slogan Utama Diapit Garis Horizontal Maroon -->
+          <div class="w-full flex items-center justify-center gap-3 sm:gap-6 my-4">
+            <div class="h-[2px] flex-1 bg-maroon max-w-[120px] sm:max-w-[180px]"></div>
+            <p
+              class="font-sans font-extrabold text-xs sm:text-base tracking-[0.18em] text-maroon uppercase whitespace-nowrap">
+              ★ 100% ORIGINAL BEEF PATTY ★
+            </p>
+            <div class="h-[2px] flex-1 bg-maroon max-w-[120px] sm:max-w-[180px]"></div>
+          </div>
+
+          <!-- Deskripsi Singkat & Sub-slogan -->
+          <p class="text-xs sm:text-sm text-maroon/85 max-w-lg mx-auto font-medium leading-relaxed mt-2 mb-6">
+            Dibuat segar setiap ada pesanan (*Fresh Made to Order*) dengan saus andalan khas <strong>Chipsaus</strong>
+            dan kelezatan daging sapi asli berkualitas prima.
+          </p>
+
+          <!-- Quick Action CTA -->
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <a href="#menu-section"
+              class="bg-maroon hover:bg-maroon-dark text-cream-light px-7 py-3 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider border-2 border-gold shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+              <i data-lucide="utensils" class="w-4 h-4 text-gold"></i>
+              <span>Pilih Menu Sekarang</span>
+            </a>
+            <a href="#info-section"
+              class="bg-cream border border-gold text-maroon hover:bg-gold/15 px-5 py-3 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center gap-2">
+              <i data-lucide="info" class="w-4 h-4 text-gold"></i>
+              <span>Ketentuan Order</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= MENU SECTION ================= -->
+  <section id="menu-section" class="py-8 px-4 sm:px-6">
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Section Header -->
+      <div class="text-center mb-8">
+        <div class="flex items-center justify-center gap-2 text-gold font-bold text-xs tracking-widest uppercase mb-1">
+          <span>★</span><span>DAFTAR HARGA & KOMPOSISI</span><span>★</span>
+        </div>
+        <h2 class="font-display font-black text-3xl sm:text-5xl text-maroon tracking-tight">
+          Pilihan Menu Utama
+        </h2>
+        <div class="w-20 h-1 bg-gold mx-auto mt-3 rounded-full"></div>
+      </div>
+
+      <!-- Search & Category Filters -->
+      <div class="bg-cream-light p-4 rounded-xl border border-gold/40 shadow-sm mb-8 space-y-4">
+        <!-- Search Input -->
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-gold"></i>
+          <input type="text" id="menuSearchInput" oninput="handleSearchMenu()"
+            placeholder="Cari nama burger atau bahan (cth: mushroom, egg, cheese)..."
+            class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-cream border border-gold/50 text-maroon placeholder-maroon/40 text-xs sm:text-sm font-semibold focus:outline-none focus:border-maroon focus:ring-1 focus:ring-maroon">
+        </div>
+
+        <!-- Filter Tags -->
+        <div class="flex flex-wrap items-center gap-2" id="filterContainer">
+          <button onclick="setFilter('all')"
+            class="filter-btn active px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-maroon text-cream-light border border-gold transition-all">
+            Semua Menu (7)
+          </button>
+          <button onclick="setFilter('bestseller')"
+            class="filter-btn px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-cream text-maroon border border-gold/60 hover:bg-gold/20 transition-all">
+            ★ Best Seller
+          </button>
+          <button onclick="setFilter('double-cheese')"
+            class="filter-btn px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-cream text-maroon border border-gold/60 hover:bg-gold/20 transition-all">
+            Double / Cheese
+          </button>
+          <button onclick="setFilter('no-salad')"
+            class="filter-btn px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-cream text-maroon border border-gold/60 hover:bg-gold/20 transition-all">
+            Tanpa Sayur
+          </button>
+        </div>
+      </div>
+
+      <!-- Menu Grid Cards -->
+      <div id="menuCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DAILY ORDER INFO & FAQ ================= -->
+  <section id="info-section" class="py-12 px-4 sm:px-6 bg-cream-light border-y border-gold/30">
+    <div class="max-w-4xl mx-auto">
+
+      <div class="text-center mb-10">
+        <span class="text-gold font-bold text-xs tracking-widest uppercase">PANDUAN PEMESANAN</span>
+        <h3 class="font-display font-black text-2xl sm:text-4xl text-maroon mt-1">
+          Sistem Open Order Setiap Hari
+        </h3>
+        <p class="text-xs sm:text-sm text-maroon/70 mt-2 max-w-lg mx-auto">
+          Tidak perlu menunggu batch PO atau kuota habis. Chip Burger buka setiap hari untuk memuaskan selera Anda.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <!-- Info 1 -->
+        <div class="bg-cream p-5 rounded-xl border border-gold/40 text-center space-y-2">
+          <div class="w-10 h-10 rounded-full bg-maroon text-gold flex items-center justify-center mx-auto mb-2">
+            <i data-lucide="clock" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-sm text-maroon uppercase tracking-wide">Jam Operasional</h4>
+          <p class="text-xs text-maroon/80 leading-relaxed">
+            Buka setiap hari mulai pukul <strong>11.00 – 21.30 WIB</strong>. Pesanan di luar jam ini akan diproses di
+            hari berikutnya.
+          </p>
+        </div>
+
+        <!-- Info 2 -->
+        <div class="bg-cream p-5 rounded-xl border border-gold/40 text-center space-y-2">
+          <div class="w-10 h-10 rounded-full bg-maroon text-gold flex items-center justify-center mx-auto mb-2">
+            <i data-lucide="flame" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-sm text-maroon uppercase tracking-wide">Made Fresh To Order</h4>
+          <p class="text-xs text-maroon/80 leading-relaxed">
+            Patty baru dipanggang dan diracik saat pesanan Anda masuk, menjamin kerenyahan bun dan kenikmatan daging
+            yang juicy.
+          </p>
+        </div>
+
+        <!-- Info 3 -->
+        <div class="bg-cream p-5 rounded-xl border border-gold/40 text-center space-y-2">
+          <div class="w-10 h-10 rounded-full bg-maroon text-gold flex items-center justify-center mx-auto mb-2">
+            <i data-lucide="bike" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-sm text-maroon uppercase tracking-wide">Metode Pengantaran</h4>
+          <p class="text-xs text-maroon/80 leading-relaxed">
+            Pilih <strong>Delivery Kurir</strong> (ongkir flat Rp 10.000) atau <strong>Pickup / Ambil Sendiri</strong>
+            (bebas ongkir Rp 0).
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CONTACT & FOOTER ================= -->
+  <footer id="contact-section" class="bg-maroon text-cream-light pt-12 pb-24 md:pb-12 border-t-4 border-gold">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-10 border-b border-cream/20">
+        <!-- Brand Info -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <img src="assets/images/logo.png" alt="Chip Burger Logo"
+              class="w-12 h-12 object-contain rounded-xl drop-shadow-sm">
+            <span class="font-brand text-3xl text-gold">Chip Burger</span>
+          </div>
+          <p class="text-xs text-cream/80 leading-relaxed">
+            Usaha Kuliner UMKM spesialis burger premium dengan 100% Original Beef Patty & racikan bumbu khas Chipsaus.
+          </p>
+          <p class="text-xs font-bold text-gold">
+            ★ 100% ORIGINAL BEEF PATTY ★
+          </p>
+        </div>
+        </p>
+      </div>
+
+      <!-- Official Contacts -->
+      <div class="space-y-3">
+        <h5 class="text-xs font-black uppercase tracking-widest text-gold">Kontak Resmi & Order</h5>
+        <ul class="space-y-2 text-xs text-cream/90 font-medium">
+          <li class="flex items-center gap-2">
+            <i data-lucide="phone-call" class="w-4 h-4 text-gold"></i>
+            <span>WhatsApp: <strong class="text-white">0822-8436-2199</strong></span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i data-lucide="instagram" class="w-4 h-4 text-gold"></i>
+            <span>Instagram: <a href="https://instagram.com/chipburger_id" target="_blank"
+                class="text-gold-light hover:underline font-bold">@chipburger_id</a></span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-gold"></i>
+            <span>Kitchen: Made Fresh Daily</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Operational Hours -->
+      <div class="space-y-3">
+        <h5 class="text-xs font-black uppercase tracking-widest text-gold">Waktu Operasional</h5>
+        <p class="text-xs text-cream/80">
+          Senin – Minggu (Setiap Hari)<br>
+          <strong class="text-white text-sm">11.00 – 21.30 WIB</strong>
+        </p>
+        <div class="pt-2">
+          <a href="login.html"
+            class="inline-flex items-center gap-2 text-xs font-bold text-gold hover:text-white transition-colors underline">
+            <i data-lucide="user-check" class="w-4 h-4"></i>
+            <span>Masuk atau Kelola Akun Pelanggan</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-6 text-center text-[11px] text-cream/60">
+      &copy; 2026 Chip Burger (@chipburger_id). All rights reserved. • Sesuai PRD v1.1
+    </div>
+
+    </div>
+  </footer>
+
+  <!-- ================= FLOATING STICKY CART BAR (When cart has items) ================= -->
+  <div id="floatingCartBar"
+    class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:w-96 z-40 transform translate-y-32 transition-transform duration-300 pointer-events-none">
+    <div
+      class="bg-maroon text-cream-light p-3.5 rounded-2xl border-2 border-gold shadow-2xl flex items-center justify-between pointer-events-auto">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gold text-maroon flex items-center justify-center font-black text-sm">
+          <span id="floatingItemCount">0</span>
+        </div>
+        <div>
+          <p class="text-[10px] uppercase font-bold text-gold tracking-wider">Total Pesanan</p>
+          <p id="floatingSubtotal" class="font-extrabold text-sm sm:text-base text-cream-light leading-none">Rp 0</p>
+        </div>
+      </div>
+
+      <button onclick="toggleCartDrawer(true)"
+        class="bg-gold hover:bg-gold-light text-maroon px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95 shadow">
+        <span>Lihat & Checkout</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= SLIDE-OVER CART & CHECKOUT DRAWER ================= -->
+  <div id="cartDrawerBackdrop" onclick="toggleCartDrawer(false)"
+    class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm opacity-0 invisible transition-all duration-300"></div>
+
+  <aside id="cartDrawer"
+    class="fixed top-0 right-0 bottom-0 z-50 w-full max-w-md bg-cream-light border-l-2 border-gold shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300">
+
+    <!-- Drawer Header -->
+    <div class="p-5 bg-cream border-b border-gold/40 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <i data-lucide="shopping-bag" class="w-5 h-5 text-gold"></i>
+        <h3 class="font-display font-black text-lg text-maroon uppercase tracking-wide">Keranjang Pesanan</h3>
+      </div>
+      <button onclick="toggleCartDrawer(false)"
+        class="w-8 h-8 rounded-full bg-cream-light border border-gold/50 text-maroon hover:bg-maroon hover:text-white flex items-center justify-center transition-colors">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Drawer Content (Scrollable) -->
+    <div class="flex-1 overflow-y-auto p-5 space-y-6">
+
+      <!-- Cart Items Section -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-maroon/70">Menu Terpilih (<span
+              id="drawerItemsTotal">0</span>)</span>
+          <button onclick="clearAllCart()" id="clearCartBtn"
+            class="text-[11px] font-bold text-red-700 hover:underline hidden">
+            Hapus Semua
+          </button>
+        </div>
+
+        <div id="cartItemsList" class="space-y-3">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Formulir Checkout WhatsApp Sesuai PRD 4.4 -->
+      <form id="checkoutForm" onsubmit="event.preventDefault(); triggerCheckout();"
+        class="bg-cream p-4 rounded-xl border border-gold/50 space-y-3.5">
+        <div class="border-b border-gold/30 pb-2">
+          <h4 class="font-display font-bold text-sm text-maroon uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="clipboard-check" class="w-4 h-4 text-gold"></i>
+            <span>Data Pemesan & Pengantaran</span>
+          </h4>
+        </div>
+
+        <!-- Nama Pemesan -->
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon mb-1">
+            Nama Pemesan <span class="text-red-600">*</span>
+          </label>
+          <input type="text" id="custName" required placeholder="Contoh: Budi Santoso"
+            class="w-full px-3 py-2 rounded-lg bg-cream-light border border-gold/60 text-xs font-semibold text-maroon placeholder-maroon/40 focus:outline-none focus:border-maroon">
+        </div>
+
+        <!-- Nomor WhatsApp Aktif -->
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon mb-1">
+            Nomor WhatsApp Aktif <span class="text-red-600">*</span>
+          </label>
+          <input type="tel" id="custPhone" required placeholder="Contoh: 081234567890"
+            class="w-full px-3 py-2 rounded-lg bg-cream-light border border-gold/60 text-xs font-semibold text-maroon placeholder-maroon/40 focus:outline-none focus:border-maroon">
+        </div>
+
+        <!-- Metode Penerimaan (Aturan Ongkir PRD 4.3) -->
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon mb-1">
+            Metode Penerimaan <span class="text-red-600">*</span>
+          </label>
+          <div class="grid grid-cols-2 gap-2">
+            <label
+              class="flex items-center gap-2 p-2.5 rounded-lg border border-gold/60 bg-cream-light cursor-pointer has-[:checked]:border-maroon has-[:checked]:bg-gold/15">
+              <input type="radio" name="deliveryMethod" value="delivery" checked onchange="updateDeliveryOption()"
+                class="text-maroon focus:ring-maroon">
+              <div class="text-[11px]">
+                <strong class="block text-maroon font-bold leading-tight">Delivery Kurir</strong>
+                <span class="text-maroon/70 text-[10px]">Ongkir Flat Rp 10.000</span>
+              </div>
+            </label>
+            <label
+              class="flex items-center gap-2 p-2.5 rounded-lg border border-gold/60 bg-cream-light cursor-pointer has-[:checked]:border-maroon has-[:checked]:bg-gold/15">
+              <input type="radio" name="deliveryMethod" value="pickup" onchange="updateDeliveryOption()"
+                class="text-maroon focus:ring-maroon">
+              <div class="text-[11px]">
+                <strong class="block text-maroon font-bold leading-tight">Pickup Sendiri</strong>
+                <span class="text-green-700 text-[10px] font-bold">Bebas Ongkir (Rp 0)</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Pilihan Waktu Pesanan Hari Ini Sesuai PRD 4.4 -->
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon mb-1">
+            Waktu Pengantaran / Ambil Hari Ini <span class="text-red-600">*</span>
+          </label>
+          <select id="orderTimeSlot" required
+            class="w-full px-3 py-2 rounded-lg bg-cream-light border border-gold/60 text-xs font-semibold text-maroon focus:outline-none focus:border-maroon">
+            <option value="Kirim / Ambil Sekarang (Estimasi ± 20–30 Menit)">Kirim / Ambil Sekarang (Estimasi ± 20–30
+              Menit)</option>
+            <option value="Jadwal Siang (12.00 – 14.00 WIB)">Jadwal Siang (12.00 – 14.00 WIB)</option>
+            <option value="Jadwal Sore (16.00 – 18.00 WIB)">Jadwal Sore (16.00 – 18.00 WIB)</option>
+            <option value="Jadwal Malam (19.00 – 21.00 WIB)">Jadwal Malam (19.00 – 21.00 WIB)</option>
+          </select>
+        </div>
+
+        <!-- Alamat Lengkap (Wajib jika Delivery Kurir) dengan Fitur GPS Pinpoint -->
+        <div id="addressFieldContainer" class="space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon">
+              Alamat Pengiriman Lengkap <span class="text-red-600">*</span>
+            </label>
+            <!-- Tombol Deteksi GPS Akurat -->
+            <button type="button" onclick="detectUserLocation()" id="gpsDetectBtn"
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gold/15 hover:bg-gold/25 text-maroon border border-gold/50 text-[10px] font-extrabold uppercase tracking-wider active:scale-95 transition-all shadow-sm">
+              <i data-lucide="map-pin" class="w-3 h-3 text-gold"></i>
+              <span id="gpsBtnLabel">Gunakan Lokasi GPS Saya</span>
+            </button>
+          </div>
+
+          <textarea id="custAddress" rows="2" placeholder="Nama Jalan, No. Rumah, RT/RW, Patokan..."
+            class="w-full px-3 py-2 rounded-lg bg-cream-light border border-gold/60 text-xs font-semibold text-maroon placeholder-maroon/40 focus:outline-none focus:border-maroon"></textarea>
+
+          <!-- Hidden Coordinate Store & Visual GPS Badge Preview -->
+          <input type="hidden" id="custGpsLat">
+          <input type="hidden" id="custGpsLng">
+          <input type="hidden" id="custGpsMapsUrl">
+
+          <div id="gpsSuccessBox"
+            class="hidden p-2 rounded-lg bg-emerald-50 border border-emerald-300 text-[11px] text-emerald-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              <span>Titik GPS Terkunci: <strong id="gpsCoordinatesText" class="font-mono font-bold">-</strong></span>
+            </div>
+            <a id="gpsTestLink" href="#" target="_blank"
+              class="text-emerald-700 hover:text-emerald-900 font-bold underline text-[10px] flex items-center gap-1">
+              <span>Buka Maps</span>
+              <i data-lucide="external-link" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Catatan Tambahan (Opsional) -->
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-maroon mb-1">
+            Catatan Khusus (Opsional)
+          </label>
+          <input type="text" id="custNotes" placeholder="Contoh: jangan pakai bawang / saus dipisah"
+            class="w-full px-3 py-2 rounded-lg bg-cream-light border border-gold/60 text-xs font-semibold text-maroon placeholder-maroon/40 focus:outline-none focus:border-maroon">
+        </div>
+
+      </form>
+
+    </div>
+
+    <!-- Drawer Footer (Billing & Order Button) -->
+    <div class="p-5 bg-cream border-t-2 border-gold space-y-3">
+      <div class="space-y-1.5 text-xs">
+        <div class="flex justify-between text-maroon/80">
+          <span>Subtotal Menu:</span>
+          <span id="drawerSubtotal" class="font-bold text-maroon">Rp 0</span>
+        </div>
+        <div class="flex justify-between text-maroon/80">
+          <span>Ongkos Kirim:</span>
+          <span id="drawerShippingFee" class="font-bold text-maroon">Rp 10.000</span>
+        </div>
+        <div class="flex justify-between text-sm sm:text-base font-black text-maroon pt-2 border-t border-gold/40">
+          <span class="font-display">TOTAL PEMBAYARAN:</span>
+          <span id="drawerTotal" class="text-gold-dark font-extrabold">Rp 10.000</span>
+        </div>
+      </div>
+
+      <!-- Submit Order Button -->
+      <button type="button" onclick="triggerCheckout()" id="checkoutSubmitBtn"
+        class="w-full py-3.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-xs uppercase tracking-wider shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+        <i data-lucide="message-circle" class="w-4 h-4"></i>
+        <span>Kirim Pesanan ke WhatsApp</span>
+      </button>
+
+      <p class="text-[10px] text-center text-maroon/60">
+        Pesanan langsung diteruskan ke WhatsApp resmi <strong>0822-8436-2199</strong> dengan nomor antrean unik #CB-XXX.
+      </p>
+    </div>
+
+  </aside>
+
+  <!-- ================= MODAL KONFIRMASI ORDER / STRUK PREVIEW (PRD 4.4) ================= -->
+  <div id="receiptModal"
+    class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300">
+    <div
+      class="bg-cream-light border-2 border-gold max-w-md w-full rounded-2xl shadow-poster p-6 relative max-h-[90vh] flex flex-col">
+
+      <!-- Close button -->
+      <button onclick="closeReceiptModal()" class="absolute top-4 right-4 text-maroon/60 hover:text-maroon">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Receipt Header -->
+      <div class="text-center pb-4 border-b border-gold/40">
+        <span class="text-[10px] font-bold text-gold uppercase tracking-[0.2em]">STRUK PESANAN RESMI</span>
+        <h3 class="font-brand text-3xl text-maroon">Chip Burger</h3>
+        <div
+          class="mt-1 inline-block bg-maroon text-gold font-display font-black text-sm px-4 py-1 rounded-full border border-gold">
+          NO. ANTREAN: <span id="receiptQueueNo">#CB-000</span>
+        </div>
+      </div>
+
+      <!-- Receipt Body Textarea Preview -->
+      <div class="flex-1 overflow-y-auto py-4">
+        <pre id="receiptRawText"
+          class="p-3 bg-cream rounded-lg border border-gold/30 text-[11px] font-mono text-maroon whitespace-pre-wrap leading-relaxed select-all"></pre>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="space-y-2 pt-2 border-t border-gold/40">
+        <a id="receiptWaBtn" href="#" target="_blank"
+          class="w-full py-3 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow transition-all">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>Buka WhatsApp Sekarang</span>
+        </a>
+        <button onclick="copyReceiptText()"
+          class="w-full py-2.5 rounded-xl bg-cream border border-gold text-maroon font-bold text-xs uppercase tracking-wider hover:bg-gold/15 flex items-center justify-center gap-2 transition-all">
+          <i data-lucide="copy" class="w-3.5 h-3.5 text-gold"></i>
+          <span id="copyBtnText">Salin Format Pesanan</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script>
+    // 1. DATA PRODUK & KATALOG MENU RESMI (PRD BAGIAN 3)
+    const CHIP_MENU = [
+      {
+        id: 'no-salad-burger',
+        name: 'NO SALAD BURGER',
+        displayPrice: '27K',
+        price: 27000,
+        ingredients: 'Bun, Beef Patty, Chipsaus, Cheese Slice',
+        tag: 'no-salad',
+        isBestSeller: false,
+        image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80'
+      },
+      {
+        id: 'lo-burger',
+        name: 'LO BURGER',
+        displayPrice: '32K',
+        price: 32000,
+        ingredients: 'Bun, Beef Patty, Chipsaus, Lettuce, Onion, Pickle, Cheese Slice, Tomato',
+        tag: 'bestseller',
+        isBestSeller: true,
+        image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80'
+      },
+      {
+        id: 'mushroom-burger',
+        name: 'MUSHROOM BURGER',
+        displayPrice: '37K',
+        price: 37000,
+        ingredients: 'Bun, Beef Patty, Mushroom, Chipsaus, Lettuce, Onion, Pickle, Cheese Slice, Tomato',
+        tag: 'mushroom',
+        isBestSeller: false,
+        image: 'https://images.unsplash.com/photo-1583032015879-c5622e519967?auto=format&fit=crop&w=600&q=80'
+      },
+      {
+        id: 'gourmet-burger',
+        name: 'GOURMET BURGER',
+        displayPrice: '40K',
+        price: 40000,
+        ingredients: 'Bun, Beef Patty, Chipsaus, Lettuce, Onion, Pickle, Beef Slice, Cheese Slice, Tomato, Egg Yolk',
+        tag: 'bestseller',
+        isBestSeller: true,
+        image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=600&q=80'
+      },
+      {
+        id: 'smoked-beef-burger',
+        name: 'SMOKED BEEF BURGER',
+        displayPrice: '43K',
+        price: 43000,
+        ingredients: 'Bun, Beef Patty, Smoked Beef, Chipsaus, Lettuce, Onion, Pickle, Cheese Slice, Tomato',
+        tag: 'smoked',
+        isBestSeller: false,
+        image: 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80'
+      },
+      {
+        id: 'cheese-burger',
+        name: 'CHEESE BURGER',
+        displayPrice: '47K',
+        price: 47000,
+        ingredients: 'Bun, Beef Patty, Beef Slice, Chipsaus, Lettuce, Onion, Pickle, 2x Cheese Slice, Extra Cheese Sauce, Tomato',
+        tag: 'double-cheese, bestseller',
+        isBestSeller: true,
+        image: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=600&q=80'
+      },
+      {
+        id: 'doubpat-burger',
+        name: 'DOUBPAT BURGER',
+        displayPrice: '74K',
+        price: 74000,
+        ingredients: 'Bun, 2x Beef Patty, Beef Slice, Chipsaus, Lettuce, Onion, Pickle, 2x Cheese Slice, Extra Cheese Sauce, Tomato',
+        tag: 'double-cheese',
+        isBestSeller: false,
+        image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80'
+      }
+    ];
+
+    // State Variables
+    let cart = []; // Array of { id, name, price, qty }
+    let currentFilter = 'all';
+    let searchQuery = '';
+    const SHIPPING_COST_DELIVERY = 10000; // Flat Rp 10.000 Sesuai PRD
+    const WA_TARGET_NUMBER = '6282284362199'; // Nomor WA Resmi Chip Burger
+
+    // Currency Formatter
+    function formatIDR(amount) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        maximumFractionDigits: 0
+      }).format(amount);
+    }
+
+    // Render Menu Cards
+    function renderMenu() {
+      const container = document.getElementById('menuCardsGrid');
+      if (!container) return;
+
+      const filtered = CHIP_MENU.filter(item => {
+        // Tag Filter logic
+        let matchFilter = true;
+        if (currentFilter === 'bestseller') {
+          matchFilter = item.isBestSeller || item.tag.includes('bestseller');
+        } else if (currentFilter === 'double-cheese') {
+          matchFilter = item.tag.includes('double-cheese');
+        } else if (currentFilter === 'no-salad') {
+          matchFilter = item.tag.includes('no-salad');
+        }
+
+        // Search Query logic (name + ingredients)
+        const matchSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.ingredients.toLowerCase().includes(searchQuery.toLowerCase());
+
+        return matchFilter && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-12 text-center text-maroon/60 bg-cream p-6 rounded-xl border border-gold/30">
+            <p class="text-sm font-bold">Tidak ada menu yang sesuai dengan pencarian "${searchQuery}".</p>
+            <button onclick="setFilter('all'); document.getElementById('menuSearchInput').value='';" class="mt-2 text-xs font-bold text-gold underline">Tampilkan Semua Menu</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => {
+        const cartItem = cart.find(c => c.id === item.id);
+        const qtyInCart = cartItem ? cartItem.qty : 0;
+
+        return `
+          <div class="bg-cream-light rounded-xl border-2 border-gold/60 p-4 sm:p-5 shadow-classic flex flex-col justify-between hover:border-gold transition-all relative group">
+            
+            <!-- Best Seller Ribbon / Badge -->
+            ${item.isBestSeller ? `
+              <div class="absolute -top-3 right-4 bg-maroon text-gold font-bold text-[10px] uppercase tracking-wider px-3 py-0.5 rounded-full border border-gold shadow-sm flex items-center gap-1">
+                <span>★</span><span>BEST SELLER</span>
+              </div>
+            ` : ''}
+
+            <!-- Card Header: Title & Display Price -->
+            <div>
+              <div class="flex items-start justify-between gap-2 border-b border-gold/30 pb-2 mb-3">
+                <div>
+                  <h3 class="font-sans font-black text-base sm:text-lg text-maroon tracking-tight leading-tight">
+                    ${item.name}
+                  </h3>
+                  <span class="text-[10px] font-bold text-gold uppercase tracking-wider">100% Original Beef Patty</span>
+                </div>
+                <div class="text-right flex-shrink-0">
+                  <span class="font-display font-black text-xl sm:text-2xl text-gold-dark block leading-none">
+                    ${item.displayPrice}
+                  </span>
+                  <span class="text-[10px] text-maroon/60 font-semibold">${formatIDR(item.price)}</span>
+                </div>
+              </div>
+
+              <!-- Composition / Ingredients (PRD Wajib) -->
+              <p class="text-xs text-maroon/80 leading-relaxed mb-4">
+                <strong class="font-bold text-maroon">Komposisi:</strong> ${item.ingredients}
+              </p>
+            </div>
+
+            <!-- Card Footer: Stepper or Add Button (PRD 4.2) -->
+            <div class="pt-3 border-t border-gold/20 flex items-center justify-between">
+              <span class="text-[11px] font-semibold text-maroon/70">
+                ${qtyInCart > 0 ? `<span class="text-green-700 font-bold">${qtyInCart} di keranjang</span>` : 'Segar & Hangat'}
+              </span>
+
+              ${qtyInCart === 0 ? `
+                <button onclick="addToCart('${item.id}')" class="px-4 py-2 rounded-lg bg-maroon hover:bg-maroon-dark text-cream-light text-xs font-bold uppercase tracking-wider border border-gold flex items-center gap-1.5 active:scale-95 transition-all shadow-sm">
+                  <span>+ Tambah</span>
+                </button>
+              ` : `
+                <div class="inline-flex items-center bg-cream rounded-lg border-2 border-gold overflow-hidden">
+                  <button onclick="changeQty('${item.id}', -1)" class="w-8 h-8 flex items-center justify-center font-black text-maroon hover:bg-gold/20 text-sm transition-colors">-</button>
+                  <span class="w-8 text-center font-black text-xs text-maroon">${qtyInCart}</span>
+                  <button onclick="changeQty('${item.id}', 1)" class="w-8 h-8 flex items-center justify-center font-black text-maroon hover:bg-gold/20 text-sm transition-colors">+</button>
+                </div>
+              `}
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // Filter controls
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('#filterContainer .filter-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-maroon', 'text-cream-light');
+        btn.classList.add('bg-cream', 'text-maroon');
+      });
+      if (event && event.target) {
+        event.target.classList.add('active', 'bg-maroon', 'text-cream-light');
+        event.target.classList.remove('bg-cream', 'text-maroon');
+      }
+      renderMenu();
+    }
+
+    // Search query
+    function handleSearchMenu() {
+      searchQuery = document.getElementById('menuSearchInput').value;
+      renderMenu();
+    }
+
+    // Cart Management
+    function addToCart(itemId) {
+      const product = CHIP_MENU.find(m => m.id === itemId);
+      if (!product) return;
+
+      const existing = cart.find(c => c.id === itemId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          qty: 1
+        });
+      }
+      saveAndSyncCart();
+    }
+
+    function changeQty(itemId, delta) {
+      const item = cart.find(c => c.id === itemId);
+      if (!item) return;
+
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(c => c.id !== itemId);
+      }
+      saveAndSyncCart();
+    }
+
+    function clearAllCart() {
+      if (confirm('Hapus seluruh item dari keranjang pesanan?')) {
+        cart = [];
+        saveAndSyncCart();
+      }
+    }
+
+    function saveAndSyncCart() {
+      localStorage.setItem('chipburger_prd_cart', JSON.stringify(cart));
+      updateCartUI();
+      renderMenu();
+    }
+
+    function loadSavedCart() {
+      const saved = localStorage.getItem('chipburger_prd_cart');
+      if (saved) {
+        try { cart = JSON.parse(saved); } catch (e) { cart = []; }
+      }
+      updateCartUI();
+    }
+
+    // Update Cart UI & Billing Calculations
+    function updateCartUI() {
+      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+      // Method Delivery determination
+      const isDelivery = document.querySelector('input[name="deliveryMethod"]:checked')?.value === 'delivery';
+      const shippingFee = (totalCount > 0 && isDelivery) ? SHIPPING_COST_DELIVERY : 0;
+      const grandTotal = subtotal + shippingFee;
+
+      // Update Nav Badge
+      const navCartCount = document.getElementById('navCartCount');
+      if (navCartCount) navCartCount.textContent = totalCount;
+
+      // Update Floating Bar
+      const floatingBar = document.getElementById('floatingCartBar');
+      const floatingItemCount = document.getElementById('floatingItemCount');
+      const floatingSubtotal = document.getElementById('floatingSubtotal');
+      if (floatingBar && floatingItemCount && floatingSubtotal) {
+        floatingItemCount.textContent = totalCount;
+        floatingSubtotal.textContent = formatIDR(subtotal);
+        if (totalCount > 0) {
+          floatingBar.classList.remove('translate-y-32');
+        } else {
+          floatingBar.classList.add('translate-y-32');
+        }
+      }
+
+      // Update Drawer
+      const drawerItemsTotal = document.getElementById('drawerItemsTotal');
+      const clearCartBtn = document.getElementById('clearCartBtn');
+      const cartItemsList = document.getElementById('cartItemsList');
+      const drawerSubtotal = document.getElementById('drawerSubtotal');
+      const drawerShippingFee = document.getElementById('drawerShippingFee');
+      const drawerTotal = document.getElementById('drawerTotal');
+
+      if (drawerItemsTotal) drawerItemsTotal.textContent = totalCount;
+      if (clearCartBtn) clearCartBtn.classList.toggle('hidden', totalCount === 0);
+
+      if (drawerSubtotal) drawerSubtotal.textContent = formatIDR(subtotal);
+      if (drawerShippingFee) {
+        drawerShippingFee.textContent = isDelivery ? formatIDR(SHIPPING_COST_DELIVERY) : 'Rp 0 (Pickup)';
+      }
+      if (drawerTotal) drawerTotal.textContent = formatIDR(grandTotal);
+
+      // Render Item List in Drawer
+      if (cartItemsList) {
+        if (cart.length === 0) {
+          cartItemsList.innerHTML = `
+            <div class="py-8 text-center text-maroon/60">
+              <i data-lucide="shopping-bag" class="w-8 h-8 mx-auto text-gold/60 mb-2"></i>
+              <p class="text-xs font-semibold">Keranjang pesanan masih kosong.</p>
+              <p class="text-[10px] text-maroon/40 mt-1">Pilih varian burger lezat di katalog menu.</p>
+            </div>
+          `;
+        } else {
+          cartItemsList.innerHTML = cart.map(item => `
+            <div class="bg-cream p-3 rounded-lg border border-gold/40 flex items-center justify-between gap-3">
+              <div class="flex-1 min-w-0">
+                <h5 class="font-bold text-xs text-maroon truncate">${item.name}</h5>
+                <span class="text-[11px] font-semibold text-gold-dark">${formatIDR(item.price)} x ${item.qty} = ${formatIDR(item.price * item.qty)}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <div class="inline-flex items-center bg-cream-light rounded-md border border-gold">
+                  <button onclick="changeQty('${item.id}', -1)" class="w-6 h-6 flex items-center justify-center font-bold text-maroon text-xs hover:bg-gold/20">-</button>
+                  <span class="w-6 text-center text-xs font-black text-maroon">${item.qty}</span>
+                  <button onclick="changeQty('${item.id}', 1)" class="w-6 h-6 flex items-center justify-center font-bold text-maroon text-xs hover:bg-gold/20">+</button>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      lucide.createIcons();
+    }
+
+    // Toggle Delivery option
+    function updateDeliveryOption() {
+      const isDelivery = document.querySelector('input[name="deliveryMethod"]:checked')?.value === 'delivery';
+      const addressContainer = document.getElementById('addressFieldContainer');
+      const custAddress = document.getElementById('custAddress');
+
+      if (addressContainer && custAddress) {
+        if (isDelivery) {
+          addressContainer.classList.remove('hidden');
+          custAddress.required = true;
+        } else {
+          addressContainer.classList.add('hidden');
+          custAddress.required = false;
+        }
+      }
+      updateCartUI();
+    }
+
+    // Drawer Toggle
+    function toggleCartDrawer(open) {
+      const drawer = document.getElementById('cartDrawer');
+      const backdrop = document.getElementById('cartDrawerBackdrop');
+      if (!drawer || !backdrop) return;
+
+      if (open) {
+        backdrop.classList.remove('invisible', 'opacity-0');
+        backdrop.classList.add('visible', 'opacity-100');
+        drawer.classList.remove('translate-x-full');
+      } else {
+        drawer.classList.add('translate-x-full');
+        backdrop.classList.remove('opacity-100');
+        backdrop.classList.add('opacity-0');
+        setTimeout(() => backdrop.classList.add('invisible'), 300);
+      }
+    }
+
+    // Generate Random 3-Digit Queue No (#CB-XXX)
+    function generateQueueNumber() {
+      const random3Digit = Math.floor(100 + Math.random() * 900);
+      return `#CB-${random3Digit}`;
+    }
+
+    // Trigger Checkout Submission
+    function triggerCheckout() {
+      const form = document.getElementById('checkoutForm');
+      if (form) {
+        if (form.reportValidity()) {
+          processOrderCheckout();
+        }
+      }
+    }
+
+    // Process Order to WhatsApp & Receipt Modal (PRD 4.4)
+    function processOrderCheckout() {
+      if (cart.length === 0) {
+        alert('Keranjang pesanan Anda masih kosong! Silakan pilih burger terlebih dahulu.');
+        return;
+      }
+
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const method = document.querySelector('input[name="deliveryMethod"]:checked')?.value;
+      const timeSlot = document.getElementById('orderTimeSlot').value;
+      const address = document.getElementById('custAddress').value.trim();
+      const notes = document.getElementById('custNotes').value.trim();
+      const gpsMapsUrl = document.getElementById('custGpsMapsUrl').value.trim();
+
+      const queueNo = generateQueueNumber();
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const shippingFee = (method === 'delivery') ? SHIPPING_COST_DELIVERY : 0;
+      const grandTotal = subtotal + shippingFee;
+
+      // Construct WhatsApp Formatted Text (Bold & Structured)
+      let waText = `*★ FORM ORDER CHIP BURGER (@chipburger_id) ★*\n`;
+      waText += `*Nomor Antrean:* *${queueNo}*\n`;
+      waText += `*Waktu Order:* ${new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}\n`;
+      waText += `======================================\n`;
+      waText += `*DATA PEMESAN:*\n`;
+      waText += `• *Nama Pemesan:* *${name}*\n`;
+      waText += `• *No. WhatsApp:* *${phone}*\n`;
+      waText += `• *Metode:* *${method === 'delivery' ? '🛵 DELIVERY KURIR' : '🏪 PICKUP / AMBIL SENDIRI'}*\n`;
+      waText += `• *Waktu Pengantaran:* *${timeSlot}*\n`;
+      if (method === 'delivery') {
+        waText += `• *Alamat Pengiriman:* *${address}*\n`;
+        if (gpsMapsUrl) {
+          waText += `• *Titik GPS Google Maps:* ${gpsMapsUrl}\n`;
+        }
+      }
+      if (notes) {
+        waText += `• *Catatan Khusus:* *_${notes}_*\n`;
+      }
+      waText += `======================================\n`;
+      waText += `*RINCIAN PESANAN (100% ORIGINAL BEEF PATTY):*\n`;
+      cart.forEach((item, index) => {
+        waText += `${index + 1}. *${item.name}* (${item.qty}x) = *${formatIDR(item.price * item.qty)}*\n`;
+      });
+      waText += `======================================\n`;
+      waText += `• *Subtotal:* ${formatIDR(subtotal)}\n`;
+      waText += `• *Ongkos Kirim:* *${formatIDR(shippingFee)}* ${method === 'pickup' ? '*(Bebas Ongkir)*' : ''}\n`;
+      waText += `• *TOTAL PEMBAYARAN:* *${formatIDR(grandTotal)}*\n`;
+      waText += `======================================\n`;
+      waText += `_Mohon konfirmasi ketersediaan & info pembayaran ya Admin Chip Burger. Terima kasih!_`;
+
+      // Post order to Node.js backend so admin portal receives it in real-time
+      try {
+        fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            queueNo,
+            customerName: name,
+            customerPhone: phone,
+            method,
+            timeSlot,
+            address,
+            gpsLocation: gpsMapsUrl || null,
+            notes,
+            items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
+            subtotal,
+            shippingFee,
+            total: grandTotal
+          })
+        }).catch(() => { });
+      } catch (err) { }
+
+      // Open WhatsApp URL
+      const waEncoded = encodeURIComponent(waText);
+      const waUrl = `https://wa.me/${WA_TARGET_NUMBER}?text=${waEncoded}`;
+      window.open(waUrl, '_blank');
+
+      // Show Receipt Confirmation Modal
+      showReceiptModal(queueNo, waText, waUrl);
+    }
+
+    // Modal Receipt display
+    function showReceiptModal(queueNo, rawText, waUrl) {
+      document.getElementById('receiptQueueNo').textContent = queueNo;
+      document.getElementById('receiptRawText').textContent = rawText;
+      document.getElementById('receiptWaBtn').href = waUrl;
+
+      const modal = document.getElementById('receiptModal');
+      modal.classList.remove('invisible', 'opacity-0');
+      modal.classList.add('visible', 'opacity-100');
+    }
+
+    function closeReceiptModal() {
+      const modal = document.getElementById('receiptModal');
+      modal.classList.remove('opacity-100');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('invisible'), 300);
+    }
+
+    function copyReceiptText() {
+      const text = document.getElementById('receiptRawText').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const copyBtnText = document.getElementById('copyBtnText');
+        copyBtnText.textContent = 'Tersalin ke Clipboard!';
+        setTimeout(() => copyBtnText.textContent = 'Salin Format Pesanan', 2500);
+      });
+    }
+
+    // Sync Auth user from login.html if logged in
+    function checkLoggedInUser() {
+      const userStr = localStorage.getItem('chipburger_user');
+      const authArea = document.getElementById('authHeaderArea');
+      const custNameInput = document.getElementById('custName');
+      const custPhoneInput = document.getElementById('custPhone');
+
+      if (userStr && authArea) {
+        const user = JSON.parse(userStr);
+        authArea.innerHTML = `
+          <div class="flex items-center gap-2 bg-cream px-3 py-1.5 rounded-full border border-gold text-xs font-bold text-maroon">
+            <span class="w-5 h-5 rounded-full bg-gold text-maroon flex items-center justify-center font-black text-[10px]">
+              ${user.name.charAt(0).toUpperCase()}
+            </span>
+            <span class="hidden sm:inline max-w-[120px] truncate">${user.name}</span>
+            <button onclick="localStorage.removeItem('chipburger_user'); window.location.reload();" class="text-red-700 hover:text-red-900 ml-1" title="Keluar">
+              <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        `;
+        if (custNameInput && !custNameInput.value) custNameInput.value = user.name;
+        if (custPhoneInput && !custPhoneInput.value) custPhoneInput.value = user.phone || '';
+      }
+    }
+
+    // Smart GPS Location Detection with Reverse Geocoding
+    function detectUserLocation() {
+      const btn = document.getElementById('gpsDetectBtn');
+      const label = document.getElementById('gpsBtnLabel');
+      const addressInput = document.getElementById('custAddress');
+      const latInput = document.getElementById('custGpsLat');
+      const lngInput = document.getElementById('custGpsLng');
+      const mapsUrlInput = document.getElementById('custGpsMapsUrl');
+      const successBox = document.getElementById('gpsSuccessBox');
+      const coordText = document.getElementById('gpsCoordinatesText');
+      const testLink = document.getElementById('gpsTestLink');
+
+      if (!navigator.geolocation) {
+        alert('Browser Anda tidak mendukung deteksi lokasi GPS otomatis.');
+        return;
+      }
+
+      // Update button state while detecting
+      btn.disabled = true;
+      label.textContent = 'Mendeteksi Titik GPS...';
+      btn.classList.add('opacity-75');
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude.toFixed(6);
+          const lng = position.coords.longitude.toFixed(6);
+          const mapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
+
+          latInput.value = lat;
+          lngInput.value = lng;
+          mapsUrlInput.value = mapsUrl;
+
+          coordText.textContent = `${lat}, ${lng}`;
+          testLink.href = mapsUrl;
+          successBox.classList.remove('hidden');
+
+          // Try reverse geocoding via OpenStreetMap Nominatim for human-readable address
+          try {
+            label.textContent = 'Mengambil Nama Jalan...';
+            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`, {
+              headers: { 'Accept-Language': 'id,en' }
+            });
+            const data = await res.json();
+            if (data && data.display_name) {
+              const currentText = addressInput.value.trim();
+              if (!currentText || currentText.includes('Patokan')) {
+                addressInput.value = data.display_name;
+              } else {
+                addressInput.value = `${currentText}\n(Alamat GPS: ${data.display_name})`;
+              }
+            }
+          } catch (e) {
+            // If offline/API blocked, append coordinates
+            if (!addressInput.value.trim()) {
+              addressInput.value = `Titik Koordinat: ${lat}, ${lng}`;
+            }
+          }
+
+          label.textContent = 'Lokasi GPS Terkunci';
+          btn.classList.remove('opacity-75');
+          btn.classList.add('bg-emerald-100', 'text-emerald-800', 'border-emerald-400');
+          btn.disabled = false;
+          lucide.createIcons();
+        },
+        (error) => {
+          btn.disabled = false;
+          btn.classList.remove('opacity-75');
+          label.textContent = 'Gunakan Lokasi GPS Saya';
+          let msg = 'Gagal mendeteksi lokasi GPS.';
+          if (error.code === error.PERMISSION_DENIED) {
+            msg = 'Izin akses lokasi ditolak oleh browser. Silakan izinkan akses lokasi di pengaturan browser Anda.';
+          } else if (error.code === error.POSITION_UNAVAILABLE) {
+            msg = 'Informasi lokasi tidak tersedia saat ini.';
+          } else if (error.code === error.TIMEOUT) {
+            msg = 'Waktu permintaan lokasi habis.';
+          }
+          alert(msg);
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    }
+
+    // Initialize Page
+    document.addEventListener('DOMContentLoaded', () => {
+      renderMenu();
+      loadSavedCart();
+      checkLoggedInUser();
+      updateDeliveryOption();
+      lucide.createIcons();
+    });
+  </script>
+
+</body>
+
+</html>

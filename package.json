@@ -1,0 +1,36 @@
+{
+    "name": "chip-burger-web",
+    "version": "1.1.0",
+    "description": "Chip Burger Web Store & Daily Open Order System with Node.js & Express",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "node --watch server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "chip-burger",
+        "burger",
+        "culinary",
+        "restaurant",
+        "open-order",
+        "whatsapp-order",
+        "nodejs",
+        "express"
+    ],
+    "author": "Chip Burger (@chipburger_id)",
+    "license": "ISC",
+    "dependencies": {
+        "@supabase/server": "^1.9.2",
+        "@supabase/ssr": "^0.12.7",
+        "@supabase/supabase-js": "^2.119.1",
+        "cors": "^2.8.5",
+        "express": "^4.19.2"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.0"
+    },
+    "engines": {
+        "node": ">=16.0.0"
+    }
+}

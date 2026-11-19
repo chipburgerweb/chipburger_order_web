@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Admin - Chip Burger (@chipburger_id)</title>
+
+  <!-- Google Fonts: Lobster, Libre Baskerville, Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Lobster&family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: {
+              DEFAULT: '#F9F4E8',
+              light: '#FDFBF5',
+              dark: '#EFE7D3'
+            },
+            maroon: {
+              DEFAULT: '#5A0C12',
+              dark: '#3F070B',
+              bun: '#7F232C',
+              patty: '#532122'
+            },
+            gold: {
+              DEFAULT: '#B88928',
+              light: '#D4AF37',
+              dark: '#8C6718'
+            }
+          },
+          fontFamily: {
+            brand: ['Lobster', 'cursive'],
+            display: ['"Playfair Display"', '"Libre Baskerville"', 'serif'],
+            sans: ['Montserrat', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-cream-dark/40 text-maroon font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- ================= VIEW 1: FORM LOGIN ADMIN (Jika Belum Login) ================= -->
+  <div id="adminLoginView" class="flex-1 flex items-center justify-center p-4">
+    <div class="bg-cream-light border-2 border-gold max-w-md w-full rounded-2xl shadow-2xl p-6 sm:p-8 relative">
+
+      <!-- Logo Header -->
+      <div class="text-center mb-6">
+        <div class="w-20 h-20 mx-auto mb-2 flex items-center justify-center">
+          <img src="assets/images/logo.png" alt="Chip Burger Logo" class="w-full h-full object-contain drop-shadow-sm">
+        </div>
+        <span class="font-brand text-3xl text-maroon">Chip Burger</span>
+        <div
+          class="inline-block bg-maroon text-gold text-[10px] font-black uppercase px-3 py-0.5 rounded-full tracking-wider mt-1 border border-gold">
+          PORTAL KHUSUS ADMIN
+        </div>
+        <p class="text-xs text-maroon/70 mt-2 font-medium">
+          Silakan masukkan akun admin Anda untuk membuka dashboard.
+        </p>
+      </div>
+
+      <!-- Alert -->
+      <div id="adminLoginAlert" class="hidden mb-4 p-3 rounded-lg text-xs font-bold text-center"></div>
+
+      <!-- Form Login Admin -->
+      <form onsubmit="handleDirectAdminLogin(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-maroon mb-1">Email / Akun Admin</label>
+          <input type="email" id="adminInputEmail" required placeholder="Masukkan email admin..."
+            class="w-full px-3.5 py-2.5 rounded-lg bg-cream border border-gold/60 text-maroon font-semibold placeholder-maroon/30 focus:outline-none focus:border-maroon">
+        </div>
+
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-maroon mb-1">Kata Sandi</label>
+          <input type="password" id="adminInputPassword" required placeholder="Masukkan kata sandi..."
+            class="w-full px-3.5 py-2.5 rounded-lg bg-cream border border-gold/60 text-maroon font-semibold placeholder-maroon/30 focus:outline-none focus:border-maroon">
+        </div>
+
+        <button type="submit"
+          class="w-full py-3 rounded-xl bg-maroon hover:bg-maroon-dark text-cream-light font-bold uppercase tracking-wider border border-gold shadow-md active:scale-95 transition-all flex items-center justify-center gap-2">
+          <i data-lucide="shield-check" class="w-4 h-4 text-gold"></i>
+          <span>Masuk ke Portal Admin</span>
+        </button>
+      </form>
+
+      <div class="mt-6 pt-4 border-t border-gold/30 text-center">
+        <a href="index.html"
+          class="text-xs font-bold text-maroon/70 hover:text-gold uppercase tracking-wider inline-flex items-center gap-1">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>Kembali ke Halaman Web Toko</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= VIEW 2: DASHBOARD ADMIN LENGKAP (Setelah Berhasil Login) ================= -->
+  <div id="adminDashboardView" class="hidden flex-1 flex flex-col">
+
+    <!-- ADMIN TOP NAVBAR -->
+    <header class="bg-maroon text-cream-light border-b-2 border-gold sticky top-0 z-40 shadow-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+
+        <div class="flex items-center gap-3">
+          <a href="index.html" class="flex items-center gap-2" title="Kembali ke Toko">
+            <img src="assets/images/logo.png" alt="Chip Burger Logo" class="w-9 h-9 object-contain rounded-lg drop-shadow-sm">
+            <span class="font-brand text-2xl text-gold">Chip Burger</span>
+          </a>
+          <span
+            class="bg-gold text-maroon text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full tracking-wider border border-cream">
+            PORTAL ADMIN
+          </span>
+        </div>
+
+        <div class="flex items-center gap-3 sm:gap-4">
+          <button id="storeStatusToggle" onclick="toggleStoreStatus()"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all bg-green-600 text-white shadow-sm hover:brightness-110">
+            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+            <span id="storeStatusText">Toko Buka (Open Order)</span>
+          </button>
+
+          <a href="index.html" target="_blank"
+            class="hidden sm:inline-flex items-center gap-1.5 text-xs text-cream hover:text-gold transition-colors font-semibold"
+            title="Lihat Tampilan Web Toko">
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+            <span>Lihat Toko</span>
+          </a>
+
+          <button onclick="adminLogout()"
+            class="text-xs text-red-300 hover:text-white font-bold flex items-center gap-1 px-2.5 py-1.5 rounded-lg hover:bg-maroon-dark transition-colors">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Keluar</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- DASHBOARD CONTENT -->
+    <main class="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-6 space-y-6">
+
+      <!-- KPI / STATS BAR -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-cream-light p-4 rounded-xl border border-gold/40 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-maroon/70">Total Pesanan</span>
+            <h3 id="statTotalOrders" class="text-2xl font-black font-display text-maroon mt-0.5">0</h3>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-maroon/10 text-maroon flex items-center justify-center">
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <div class="bg-cream-light p-4 rounded-xl border border-gold/40 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700">Perlu Diproses</span>
+            <h3 id="statPendingOrders" class="text-2xl font-black font-display text-amber-700 mt-0.5">0</h3>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-700 flex items-center justify-center">
+            <i data-lucide="clock" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <div class="bg-cream-light p-4 rounded-xl border border-gold/40 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-green-700">Pesanan Selesai</span>
+            <h3 id="statCompletedOrders" class="text-2xl font-black font-display text-green-700 mt-0.5">0</h3>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-green-500/15 text-green-700 flex items-center justify-center">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <div class="bg-cream-light p-4 rounded-xl border border-gold/40 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-maroon/70">Total Omset</span>
+            <h3 id="statRevenue" class="text-lg sm:text-xl font-black font-display text-gold-dark mt-0.5">Rp 0</h3>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-gold/15 text-gold-dark flex items-center justify-center">
+            <i data-lucide="wallet" class="w-5 h-5"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="flex items-center gap-2 border-b-2 border-gold/40 pb-2">
+        <button onclick="switchAdminTab('orders')" id="tabBtnOrders"
+          class="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-maroon text-cream-light shadow flex items-center gap-2 transition-all">
+          <i data-lucide="clipboard-list" class="w-4 h-4 text-gold"></i>
+          <span>Kelola Antrean Pesanan</span>
+        </button>
+        <button onclick="switchAdminTab('menu')" id="tabBtnMenu"
+          class="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-cream-light text-maroon border border-gold/40 hover:bg-gold/10 flex items-center gap-2 transition-all">
+          <i data-lucide="utensils" class="w-4 h-4 text-gold"></i>
+          <span>Kelola Menu & Ketersediaan</span>
+        </button>
+      </div>
+
+      <!-- TAB 1: ORDERS -->
+      <section id="sectionOrders" class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-maroon">Filter Status:</span>
+            <select id="filterOrderStatus" onchange="renderOrdersTable()"
+              class="px-3 py-1.5 rounded-lg bg-cream-light border border-gold/50 text-xs font-bold text-maroon focus:outline-none focus:border-maroon">
+              <option value="all">Semua Pesanan</option>
+              <option value="pending">Menunggu Konfirmasi (Pending)</option>
+              <option value="preparing">Sedang Dimasak (Preparing)</option>
+              <option value="delivering">Dalam Pengantaran (Delivering)</option>
+              <option value="completed">Selesai (Completed)</option>
+              <option value="cancelled">Dibatalkan</option>
+            </select>
+          </div>
+
+          <button onclick="loadAdminData()"
+            class="self-start sm:self-auto px-3.5 py-1.5 rounded-lg bg-cream-light border border-gold/50 text-maroon hover:bg-gold/20 text-xs font-bold flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-gold"></i>
+            <span>Perbarui Data</span>
+          </button>
+        </div>
+
+        <div class="bg-cream-light rounded-xl border-2 border-gold/40 overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-maroon">
+              <thead
+                class="bg-maroon text-cream-light uppercase font-bold text-[11px] tracking-wider border-b border-gold">
+                <tr>
+                  <th class="p-3.5">No. Antrean</th>
+                  <th class="p-3.5">Waktu</th>
+                  <th class="p-3.5">Pemesan</th>
+                  <th class="p-3.5">Metode / Jadwal</th>
+                  <th class="p-3.5">Item Pesanan</th>
+                  <th class="p-3.5">Total Bayar</th>
+                  <th class="p-3.5">Status</th>
+                  <th class="p-3.5 text-center">Aksi Cepat</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody" class="divide-y divide-gold/20"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: MENU -->
+      <section id="sectionMenu" class="space-y-4 hidden">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-display font-black text-lg text-maroon">Katalog Menu & Ketersediaan Stok</h3>
+            <p class="text-xs text-maroon/70">Atur ketersediaan menu secara langsung agar pelanggan tidak memesan varian
+              yang habis.</p>
+          </div>
+          <button onclick="openMenuModal()"
+            class="px-4 py-2 rounded-xl bg-maroon hover:bg-maroon-dark text-cream-light font-bold text-xs uppercase tracking-wider border border-gold shadow flex items-center gap-1.5">
+            <i data-lucide="plus-circle" class="w-4 h-4 text-gold"></i>
+            <span>Tambah Menu Baru</span>
+          </button>
+        </div>
+
+        <div id="adminMenuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL: ADD / EDIT MENU ITEM -->
+  <div id="menuModal"
+    class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300">
+    <div class="bg-cream-light border-2 border-gold max-w-md w-full rounded-2xl shadow-xl p-6 relative">
+      <button onclick="closeMenuModal()" class="absolute top-4 right-4 text-maroon/60 hover:text-maroon">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <h3 id="menuModalTitle" class="font-display font-black text-xl text-maroon mb-4">Tambah Menu Burger Baru</h3>
+
+      <form id="menuForm" onsubmit="handleSaveMenu(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="menuId">
+
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-maroon mb-1">Nama Menu</label>
+          <input type="text" id="menuName" required placeholder="Contoh: TRUFFLE SMASH BURGER"
+            class="w-full px-3 py-2 rounded-lg bg-cream border border-gold/50 text-maroon font-bold focus:outline-none focus:border-maroon">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold uppercase tracking-wider text-maroon mb-1">Harga (Rupiah)</label>
+            <input type="number" id="menuPrice" required placeholder="45000"
+              class="w-full px-3 py-2 rounded-lg bg-cream border border-gold/50 text-maroon font-bold focus:outline-none focus:border-maroon">
+          </div>
+          <div>
+            <label class="block font-bold uppercase tracking-wider text-maroon mb-1">Tag / Kategori</label>
+            <select id="menuTag"
+              class="w-full px-3 py-2 rounded-lg bg-cream border border-gold/50 text-maroon font-bold focus:outline-none focus:border-maroon">
+              <option value="burger">Burger Biasa</option>
+              <option value="bestseller">★ Best Seller</option>
+              <option value="double-cheese">Double / Cheese</option>
+              <option value="no-salad">Tanpa Sayur</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-maroon mb-1">Komposisi Bahan</label>
+          <textarea id="menuIngredients" rows="2" required placeholder="Bun, Beef Patty, Chipsaus, Cheese Slice..."
+            class="w-full px-3 py-2 rounded-lg bg-cream border border-gold/50 text-maroon font-semibold focus:outline-none focus:border-maroon"></textarea>
+        </div>
+
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-maroon mb-1">URL Foto Menu</label>
+          <input type="url" id="menuImage" placeholder="https://images.unsplash.com/..."
+            class="w-full px-3 py-2 rounded-lg bg-cream border border-gold/50 text-maroon focus:outline-none focus:border-maroon">
+        </div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <input type="checkbox" id="menuIsBestSeller" class="w-4 h-4 rounded text-maroon focus:ring-maroon">
+          <label for="menuIsBestSeller" class="font-bold text-maroon">Tandai sebagai Varian Best Seller</label>
+        </div>
+
+        <div class="pt-3 border-t border-gold/30 flex gap-2">
+          <button type="submit"
+            class="flex-1 py-2.5 rounded-xl bg-maroon hover:bg-maroon-dark text-cream-light font-bold uppercase tracking-wider border border-gold">
+            Simpan Menu
+          </button>
+          <button type="button" onclick="closeMenuModal()"
+            class="px-4 py-2.5 rounded-xl bg-cream border border-gold text-maroon font-bold uppercase tracking-wider">
+            Batal
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    let adminOrders = [];
+    let adminMenu = [];
+
+    // Currency Formatter
+    function formatIDR(amount) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        maximumFractionDigits: 0
+      }).format(amount || 0);
+    }
+
+    // Direct Login Handler on Admin Page
+    async function handleDirectAdminLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('adminInputEmail').value.trim();
+      const password = document.getElementById('adminInputPassword').value;
+      const alertBox = document.getElementById('adminLoginAlert');
+
+      if (email.toLowerCase() === 'warisulzaim@gmail.com' && password === 'Zaimajaya_12') {
+        const ownerUser = {
+          name: 'Warisul Zaim (Owner)',
+          email: 'warisulzaim@gmail.com',
+          role: 'admin'
+        };
+        localStorage.setItem('chipburger_admin', 'warisulzaim@gmail.com');
+        localStorage.setItem('chipburger_user', JSON.stringify(ownerUser));
+
+        showDashboard();
+        return;
+      }
+
+      // Try server validation
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ emailOrUser: email, password: password })
+        });
+        const data = await res.json();
+        if (data.success && data.user.email.toLowerCase() === 'warisulzaim@gmail.com' && data.user.role === 'admin') {
+          localStorage.setItem('chipburger_admin', 'warisulzaim@gmail.com');
+          localStorage.setItem('chipburger_user', JSON.stringify(data.user));
+          showDashboard();
+          return;
+        }
+      } catch (err) { }
+
+      alertBox.className = 'mb-4 p-3 rounded-lg text-xs font-bold text-center bg-red-100 text-red-800 border border-red-300';
+      alertBox.textContent = 'Email atau kata sandi admin salah!';
+      alertBox.classList.remove('hidden');
+    }
+
+    function checkAdminSession() {
+      const adminAuth = localStorage.getItem('chipburger_admin');
+      if (adminAuth === 'warisulzaim@gmail.com') {
+        showDashboard();
+      } else {
+        document.getElementById('adminLoginView').classList.remove('hidden');
+        document.getElementById('adminDashboardView').classList.add('hidden');
+      }
+    }
+
+    function showDashboard() {
+      document.getElementById('adminLoginView').classList.add('hidden');
+      document.getElementById('adminDashboardView').classList.remove('hidden');
+      loadAdminData();
+      lucide.createIcons();
+    }
+
+    function adminLogout() {
+      localStorage.removeItem('chipburger_admin');
+      localStorage.removeItem('chipburger_user');
+      document.getElementById('adminLoginView').classList.remove('hidden');
+      document.getElementById('adminDashboardView').classList.add('hidden');
+      document.getElementById('adminInputPassword').value = '';
+      lucide.createIcons();
+    }
+
+    // Switch Tabs
+    function switchAdminTab(tab) {
+      const isOrders = tab === 'orders';
+      document.getElementById('sectionOrders').classList.toggle('hidden', !isOrders);
+      document.getElementById('sectionMenu').classList.toggle('hidden', isOrders);
+
+      const tabBtnOrders = document.getElementById('tabBtnOrders');
+      const tabBtnMenu = document.getElementById('tabBtnMenu');
+
+      if (isOrders) {
+        tabBtnOrders.className = 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-maroon text-cream-light shadow flex items-center gap-2 transition-all';
+        tabBtnMenu.className = 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-cream-light text-maroon border border-gold/40 hover:bg-gold/10 flex items-center gap-2 transition-all';
+      } else {
+        tabBtnMenu.className = 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-maroon text-cream-light shadow flex items-center gap-2 transition-all';
+        tabBtnOrders.className = 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-cream-light text-maroon border border-gold/40 hover:bg-gold/10 flex items-center gap-2 transition-all';
+      }
+    }
+
+    // Load Data from Node Server
+    async function loadAdminData() {
+      try {
+        const resStats = await fetch('/api/admin/stats');
+        const dataStats = await resStats.json();
+        if (dataStats.success) {
+          const s = dataStats.stats;
+          document.getElementById('statTotalOrders').textContent = s.totalOrders;
+          document.getElementById('statPendingOrders').textContent = s.pendingOrders;
+          document.getElementById('statCompletedOrders').textContent = s.completedOrders;
+          document.getElementById('statRevenue').textContent = formatIDR(s.totalRevenue);
+          updateStoreToggleButton(s.isOpen);
+        }
+
+        const resOrders = await fetch('/api/admin/orders');
+        const dataOrders = await resOrders.json();
+        if (dataOrders.success) {
+          adminOrders = dataOrders.data || [];
+          renderOrdersTable();
+        }
+
+        const resMenu = await fetch('/api/menu');
+        const dataMenu = await resMenu.json();
+        if (dataMenu.success) {
+          adminMenu = dataMenu.data || [];
+          renderMenuGrid();
+        }
+      } catch (err) {
+        console.error('Gagal mengambil data admin:', err);
+      }
+      lucide.createIcons();
+    }
+
+    // Render Orders Table
+    function renderOrdersTable() {
+      const tbody = document.getElementById('ordersTableBody');
+      const filter = document.getElementById('filterOrderStatus').value;
+
+      const filtered = adminOrders.filter(o => filter === 'all' || o.status === filter);
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="p-8 text-center text-maroon/60 font-semibold">
+              Belum ada pesanan dengan status "${filter}".
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(order => {
+        const statusColors = {
+          pending: 'bg-amber-100 text-amber-800 border-amber-300',
+          preparing: 'bg-blue-100 text-blue-800 border-blue-300',
+          delivering: 'bg-purple-100 text-purple-800 border-purple-300',
+          completed: 'bg-green-100 text-green-800 border-green-300',
+          cancelled: 'bg-red-100 text-red-800 border-red-300'
+        };
+
+        const statusLabels = {
+          pending: '⏳ Menunggu',
+          preparing: '🔥 Dimasak',
+          delivering: '🛵 Diantar',
+          completed: '✅ Selesai',
+          cancelled: '❌ Batal'
+        };
+
+        const itemsSummary = (order.items || []).map(i => `${i.name} (${i.qty}x)`).join(', ');
+        const timeFormatted = new Date(order.createdAt).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+        return `
+          <tr class="hover:bg-gold/5 transition-colors">
+            <td class="p-3.5 font-black text-sm text-maroon">${order.queueNo}</td>
+            <td class="p-3.5 text-maroon/70 whitespace-nowrap">${timeFormatted} WIB</td>
+            <td class="p-3.5">
+              <strong class="block text-maroon">${order.customerName}</strong>
+              <a href="https://wa.me/62${order.customerPhone.replace(/^0/, '')}" target="_blank" class="text-green-700 font-bold hover:underline inline-flex items-center gap-1 mt-0.5">
+                <i data-lucide="phone" class="w-3 h-3"></i> ${order.customerPhone}
+              </a>
+            </td>
+            <td class="p-3.5">
+              <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase ${order.method === 'delivery' ? 'bg-orange-100 text-orange-800' : 'bg-emerald-100 text-emerald-800'}">
+                ${order.method === 'delivery' ? '🛵 Delivery' : '🏪 Pickup'}
+              </span>
+              <p class="text-[11px] text-maroon/80 mt-1">${order.timeSlot}</p>
+              ${order.gpsLocation ? `
+                <a href="${order.gpsLocation}" target="_blank" class="inline-flex items-center gap-1 text-[10px] text-blue-700 hover:text-blue-900 font-bold underline mt-1">
+                  <i data-lucide="map-pin" class="w-3 h-3 text-red-600"></i>
+                  <span>Buka Titik GPS Google Maps</span>
+                </a>
+              ` : ''}
+            </td>
+            <td class="p-3.5 max-w-xs">
+              <p class="text-xs font-medium text-maroon line-clamp-2">${itemsSummary}</p>
+              ${order.notes ? `<p class="text-[10px] text-amber-800 italic mt-0.5 font-bold">Catatan: "${order.notes}"</p>` : ''}
+            </td>
+            <td class="p-3.5 font-black text-gold-dark whitespace-nowrap">${formatIDR(order.total)}</td>
+            <td class="p-3.5">
+              <span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-black uppercase border ${statusColors[order.status] || 'bg-gray-100 text-gray-800'}">
+                ${statusLabels[order.status] || order.status}
+              </span>
+            </td>
+            <td class="p-3.5 text-center">
+              <select onchange="updateOrderStatus('${order.queueNo}', this.value)" class="px-2 py-1 bg-cream border border-gold/60 rounded text-[11px] font-bold text-maroon focus:outline-none">
+                <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Menunggu</option>
+                <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>Dimasak</option>
+                <option value="delivering" ${order.status === 'delivering' ? 'selected' : ''}>Diantar</option>
+                <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Selesai</option>
+                <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Batal</option>
+              </select>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    async function updateOrderStatus(queueNo, status) {
+      try {
+        const res = await fetch('/api/admin/orders/status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ queueNo, status })
+        });
+        const data = await res.json();
+        if (data.success) {
+          loadAdminData();
+        }
+      } catch (err) {
+        alert('Gagal memperbarui status');
+      }
+    }
+
+    function renderMenuGrid() {
+      const grid = document.getElementById('adminMenuGrid');
+      grid.innerHTML = adminMenu.map(item => `
+        <div class="bg-cream-light p-4 rounded-xl border-2 border-gold/40 shadow-sm flex flex-col justify-between relative group ${!item.available ? 'opacity-60 bg-gray-100' : ''}">
+          <div>
+            <div class="flex items-start justify-between gap-2 border-b border-gold/20 pb-2 mb-2">
+              <div>
+                <h4 class="font-black text-sm text-maroon">${item.name}</h4>
+                <span class="text-xs font-extrabold text-gold-dark">${item.displayPrice} (${formatIDR(item.price)})</span>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${item.available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                ${item.available ? 'Tersedia' : 'Habis'}
+              </span>
+            </div>
+            <p class="text-xs text-maroon/70 mb-3">${item.ingredients}</p>
+          </div>
+
+          <div class="flex items-center gap-2 pt-2 border-t border-gold/20">
+            <button onclick="toggleMenuStock('${item.id}')" class="flex-1 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider ${item.available ? 'bg-amber-600 hover:bg-amber-700 text-white' : 'bg-green-600 hover:bg-green-700 text-white'} transition-colors">
+              ${item.available ? 'Set Habis' : 'Set Tersedia'}
+            </button>
+            <button onclick='editMenuItem(${JSON.stringify(item)})' class="px-3 py-1.5 rounded-lg bg-cream border border-gold text-maroon font-bold text-xs hover:bg-gold/20">
+              Edit
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function toggleMenuStock(id) {
+      try {
+        const res = await fetch('/api/admin/menu/toggle', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        const data = await res.json();
+        if (data.success) {
+          loadAdminData();
+        }
+      } catch (e) {
+        alert('Gagal mengubah stok');
+      }
+    }
+
+    async function toggleStoreStatus() {
+      try {
+        const res = await fetch('/api/admin/store/toggle', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          updateStoreToggleButton(data.isOpen);
+        }
+      } catch (e) {
+        alert('Gagal mengubah status toko');
+      }
+    }
+
+    function updateStoreToggleButton(isOpen) {
+      const btn = document.getElementById('storeStatusToggle');
+      const text = document.getElementById('storeStatusText');
+      if (isOpen) {
+        btn.className = 'flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all bg-green-600 text-white shadow-sm hover:brightness-110';
+        text.textContent = 'Toko Buka (Open Order)';
+      } else {
+        btn.className = 'flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all bg-red-600 text-white shadow-sm hover:brightness-110';
+        text.textContent = 'Toko Tutup Sementara';
+      }
+    }
+
+    function openMenuModal() {
+      document.getElementById('menuForm').reset();
+      document.getElementById('menuId').value = '';
+      document.getElementById('menuModalTitle').textContent = 'Tambah Menu Burger Baru';
+      const m = document.getElementById('menuModal');
+      m.classList.remove('invisible', 'opacity-0');
+      m.classList.add('visible', 'opacity-100');
+    }
+
+    function editMenuItem(item) {
+      document.getElementById('menuId').value = item.id;
+      document.getElementById('menuName').value = item.name;
+      document.getElementById('menuPrice').value = item.price;
+      document.getElementById('menuTag').value = item.tag || 'burger';
+      document.getElementById('menuIngredients').value = item.ingredients;
+      document.getElementById('menuImage').value = item.image || '';
+      document.getElementById('menuIsBestSeller').checked = Boolean(item.isBestSeller);
+
+      document.getElementById('menuModalTitle').textContent = 'Edit Menu: ' + item.name;
+      const m = document.getElementById('menuModal');
+      m.classList.remove('invisible', 'opacity-0');
+      m.classList.add('visible', 'opacity-100');
+    }
+
+    function closeMenuModal() {
+      const m = document.getElementById('menuModal');
+      m.classList.remove('opacity-100');
+      m.classList.add('opacity-0');
+      setTimeout(() => m.classList.add('invisible'), 300);
+    }
+
+    async function handleSaveMenu(e) {
+      e.preventDefault();
+      const id = document.getElementById('menuId').value;
+      const name = document.getElementById('menuName').value.trim();
+      const price = Number(document.getElementById('menuPrice').value);
+      const tag = document.getElementById('menuTag').value;
+      const ingredients = document.getElementById('menuIngredients').value.trim();
+      const image = document.getElementById('menuImage').value.trim();
+      const isBestSeller = document.getElementById('menuIsBestSeller').checked;
+
+      try {
+        const res = await fetch('/api/admin/menu/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, name, price, tag, ingredients, image, isBestSeller })
+        });
+        const data = await res.json();
+        if (data.success) {
+          closeMenuModal();
+          loadAdminData();
+        }
+      } catch (err) {
+        alert('Gagal menyimpan menu');
+      }
+    }
+
+    // Auto Refresh every 30 seconds
+    setInterval(() => {
+      if (!document.getElementById('adminDashboardView').classList.contains('hidden')) {
+        loadAdminData();
+      }
+    }, 30000);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAdminSession();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+
+</html>
